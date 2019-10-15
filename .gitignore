@@ -1,0 +1,16 @@
+*~
+*.webm
+tests/?tmp/
+tests/classes
+tests/*.svg
+tests/*.ps
+tests/*.eps
+BUILD
+mods
+tmpsrc
+guides/guide/*.aux
+guides/guide/*.pdf
+guides/guide/*.log
+guides/guide/*.toc
+guides/guide/*.class
+doc-files

@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<HTML lang="en">
+  <HEAD>
+    <TITLE>Factory Parameter Documentation</TITLE>
+  </HEAD>
+  <BODY>
+    <H1>Factory Parameter Documentation</H1>
+    <P>
+      The <A HREF="../index.html" target="_top">
+	  Bicycle-Sharing Simulation Library</A> provides classes
+      for modelng a bicycle-sharing system. This simulation is built
+      on top of the org.bzdev.drama</A></CODE> package.
+    <P>
+      The adjacent frame contains a menu of factory names for
+      factories in this library (named
+      <CODE><A HREF="../index.html" target="_top">libbikeshr</A></CODE> and
+      provide by a JAR file <CODE>libbikeshr.jar</CODE>).
+      These factories are located in the package
+      <CODE><A HREF="../org.bzdev.bikeshr/org/bzdev/bikeshare/package-summary.html">
+	  org.bzdev.bikeshare</A></CODE>.
+    <P>
+      Other factories that are needed are found in the BZDev class library
+      documentation.
+    <P>
+      Please click on a factory name to find the parameter documentation
+      for the corresponding factory.
+  <h2>Factory Order</h2>
+    <P>
+      Factories should be used in the following order (or a similar one)
+      so that objects will be created before they are referenced:
+    <UL>
+      <LI> <A HREF="org/bzdev/bikeshare/ExtDomainFactory.html"><CODE>ExtDomainFactory</CODE></A>. This factory creates external domains.
+      <LI> <A HREF="org/bzdev/bikeshare/UsrDomainFactory.html"><CODE>UsrDomainFactory</CODE></A>. This factory creates user domains.
+      <LI> <A HREF="org/bzdev/bikeshare/SysDomainFactory.html"><CODE>SysDomainFactory</CODE></A>. THis factory creates system domains.
+      <LI> <A HREF="org/bzdev/bikeshare/BasicHubBalancerFactory.html"><CODE>BasicHubBalancerFactory</CODE></A>. This factory creates a simple hub balancer.
+      <LI> <A HREF="org/bzdev/bikeshare/HubFactory.html"><CODE>HubFactory.html</CODE></A>. This factory creats normal hubs.
+      <LI> <A HREF="org/bzdev/bikeshare/StorageHubFactory.html"><CODE>StorageHubFactory.html</CODE></A>. This factory creates storage hubs
+      <LI> <A HREF="org/bzdev/bikeshare/HubWorkerFactory.html"><CODE>HubWorkerFactory</CODE></A>. This factory creates hub workers.
+      <LI> <A HREF="org/bzdev/bikeshare/StdDelayTableFactory.html"><CODE>StdDelayTableFactory</CODE></A>. This factory creates a delay table for unscheduled
+	trips.
+      <LI> <A HREF="org/bzdev/bikeshare/SchedDelayTableFactory.html"><CODE>SchedDelayTableFactory</CODE></A> This factory creates a delay table for scheduled
+	trips (e.g.,trips with fixed departure times).
+      <LI> <A HREF="org/bzdev/bikeshare/BasicTripGenFactory.html"><CODE>BasicTripGenFactory</CODE></A>. This factory schedules trips with random departure
+	times and a specified number of bicycles traveling together.
+      <LI> <A HREF="org/bzdev/bikeshare/BurstTripGenFactory.html"><CODE>BurstTripGenFactory</CODE></A>. This factory schedules bursts of trips with a
+	specified arrival or departure time, depending on whether the trips
+	leave from a central point or end at a central point.
+      <LI> <A HREF="org/bzdev/bikeshare/RoundTripGenFactory.html"><CODE>BurstTripGenFactory</CODE></A>. This factory schedules round trips.
+    </UL>
+    </BODY>
+</HTML>

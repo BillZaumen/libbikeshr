@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+<HTML lang="en">
+<HEAD>
+    <TITLE>Description of org.bzdev.bikeshare</TITLE>
+</HEAD>
+<BODY>
+<H1>Description</H1>
+<P>
+To use the library, the jar file libbikeshr.jar (which should be
+installed in the same directory as libbzdev.jar) should be added to
+the class path in addition to libbzdev.jar. When scrunner is used,
+libzdev.jar is automatically included.
+<UL>
+   <LI>If Java is used directly, use the option
+     <code>-classpath /usr/share/java/libbikeshr.jar:/usr/share/java/libbzdev.jar</code>
+     (<code>/usr/share/java</code> is the standard location for java
+     libraries on Debian Linux systems). Additional class path components
+     will be needed as well (e.g., to find a main program).
+   <LI> If the scrunner command is used, the option
+     <code>--codebase .../libbikeshr.jar</code> will add the library to the
+     path when the libbikeshr.jar file is installed in the same directory
+     as the libbzdev.jar file.  This is the most convenient way of creating
+     an animation using a scripting language as the path name for the library
+     is short (the directory "..." is replaced with the directory containing
+     the libbzdev.jar file).
+</UL>
+A typical scrunner script (EMCAScript is used as an example) will typically
+start with the following:
+<blockquote><code><pre>
+scripting.importClasses("org.bzdev.bikeshare",
+			["HubDataAdapter", "TripDataAdapter"]);
+
+scripting.importClass("org.bzdev.drama.DramaSimulation");
+scripting.importClass("org.bzdev.util.units.MKS");
+
+// Import whatever random number generators are desired.
+scripting.importClass("org.bzdev.util.rv.GaussianRV");
+
+// 1000.0 is the number of simulation ticks per second and can
+// be changed as desired.
+sim = new DramaSimulation(scripting, 1000.0);
+
+simff = sim.createFactory("org.bzdev.devqsim.SimFunctionTwoFactory");
+
+sim.createFactories("org.bzdev.bikeshare", {
+    edf: "ExtDomainFactory",
+    udf: "UsrDomainFactory",
+    sdf: "SysDomainFactory",
+    hbf: "BasicHubBalancerFactory",
+    hf: "HubFactory",
+    shf: "StorageHubFactory",
+    hwf: "HubWorkerFactory",
+    stdtf: "StdDelayTableFactory",
+    schedtf: "SchedDelayTableFactory",
+    btgf: "BasicTripGenFactory"
+});
+</pre></code></blockquote>
+The factories should be used in the order listed above, or a similar
+order, due to the following dependencies:
+<UL>
+  <LI> <code>UsrHubDomainFactory</code> can specify a parent domain that
+       will typically be an instance of ExtDomain.
+  <LI> <code>BasicHubBalancerFactory</code> has a parameter whose value
+    is a system domain.
+  <LI> <code>HubFactory</code> has parameters whose values are
+       a user domain and a system domain.
+  <LI> <code>StorageHubFactory</code>  has parameters whose values are
+      a system domain and a list of hubs.
+  <LI> <code>HubWorkerFactory</code>  has parameters whose values are a
+      system domain, and a storage hub.
+  <LI> <code>StdDelayTableFactory</code>  and
+       <code>SchedDelayTableFactory</code> parameters whose values are
+      hub domains and hubs
+  <LI> <code>BasicTripGenFactory</code>  has parameters whose values are
+       hubs. This class may optionally have a parameter whose value is
+       an instance of <code>org.bzdev.devqsim.SimFunctionTwo</code>.
+</UL>
+</BODY>
+</HTML>
+
+
+<!--  LocalWords:  HubDataAdapter TripDataAdapter ExtDomainFactory
+ -->
+<!--  LocalWords:  UsrDomainFactory SysDomainFactory HubFactory
+ -->
+<!--  LocalWords:  BasicHubBalancerFactory StorageHubFactory
+ -->
+<!--  LocalWords:  HubWorkerFactory StdDelayTableFactory
+ -->
+<!--  LocalWords:  SchedDelayTableFactory BasicTripGenFactory
+ -->

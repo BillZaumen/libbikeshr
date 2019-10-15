@@ -1,0 +1,5 @@
+Class-Path: ./libbzdev-base.jar
+  ./libbzdev-obnaming.jar
+  ./libbzdev-desktop.jar
+  ./libbzdev-devqsim.jar
+  ./libbzdev-drama.jar
