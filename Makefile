@@ -28,20 +28,13 @@ TMPSRC = $(JROOT)/tmpsrc
 #
 # System directories (that contains JAR files, etc.)
 #
-SYS_LIBJARDIR = /usr/share/java
+SYS_LIBJARDIR = /usr/share/bzdev
 SYS_API_DOCDIR = /usr/share/doc/libbikeshr-doc
 SYS_JAVADOCS = $(SYS_API_DOCDIR)/api
 SYS_EXAMPLES = $(SYS_API_DOCDIR)/examples
 
 EXTDIR = $(SYS_LIBJARDIR)
-EXTLIBS1 = $(EXTDIR)/libbzdev-base.jar:$(EXTDIR)/libbzdev-desktop.jar
-EXTLIBS2 = $(EXTDIR)/libbzdev-devqsim.jar:$(EXTDIR)/libbzdev-drama.jar
-EXTLIBS = $(EXTLIBS1):$(EXTLIBS2):$(EXTDIR)/libbzdev-obnaming.jar
-
-
-PROC_PATH1 = $(EXTDIR)/libbzdev-base.jar:$(EXTDIR)/libbzdev-obnaming.jar
-PROC_PATH2 = $(EXTDIR)/libbzdev-dmethods.jar
-PROC_PATH = $(PROC_PATH1):$(PROC_PATH2):$(EXTDIR)/libbzdev-parmproc.jar
+EXTLIBS = $(EXTDIR)
 
 ALL = jarfile javadocs
 
@@ -110,7 +103,8 @@ $(JARFILE): $(FILES)  $(TMPSRC) $(JROOT_JARDIR)/libbzdev.jar \
 	mkdir -p BUILD
 	javac -d mods/org.bzdev.bikeshr -p $(EXTLIBS) \
 		-Xlint:deprecation \
-		--processor-path $(PROC_PATH) -s tmpsrc/org.bzdev.bikeshr \
+		--processor-module-path $(EXTLIBS) \
+		-s tmpsrc/org.bzdev.bikeshr \
 		$(BIKESHR_MODINFO) $(BIKESHR_JFILES) \
 		$(BIKESHR_DIR)/$(BZDEV)/bikeshare/lpack/DefaultClass.java
 	for i in $(BIKESHR_RESOURCES) ; do mkdir -p mods/`dirname $$i` ; \

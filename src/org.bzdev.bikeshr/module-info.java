@@ -11,6 +11,8 @@ module org.bzdev.bikeshr {
     requires org.bzdev.desktop;
     requires org.bzdev.devqsim;
     requires org.bzdev.drama;
+    requires static org.bzdev.dmethods;
+    requires static org.bzdev.parmproc;
     provides org.bzdev.obnaming.NamedObjectFactory with
 	org.bzdev.bikeshare.BasicHubBalancerFactory,
 	org.bzdev.bikeshare.BasicTripGenFactory,
