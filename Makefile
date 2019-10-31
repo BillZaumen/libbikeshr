@@ -168,7 +168,7 @@ $(JROOT_JAVADOCS)/index.html: $(JFILES)	overview.html  $(DIAGRAMS) $(JARFILE)
 		-link file:///usr/share/doc/libbzdev-doc/api/ \
 		-overview overview.html \
 		--module $(JDOC_MODULES) -exclude $(JDOC_EXCLUDE)
-	lsnof -d $(JROOT_JAVADOCS) -p $(JARFILE) \
+	lsnof -d $(JROOT_JAVADOCS) -p $(JROOT_JARDIR) \
 	      --link file:///usr/share/doc/openjdk-$(JAVA_VERSION)-doc/api/ \
 	      --link file:///usr/share/doc/libbzdev-doc/api/ \
 	      --overview src/FactoryOverview.html 'org.bzdev.bikeshare.*'
