@@ -22,7 +22,10 @@ import org.bzdev.util.units.MKS;
 
 @FactoryParmManager(value = "BasicHubBalancerFactoryPM",
 		    labelResourceBundle = "*.lpack.BasicHubBalancerLabels",
-		    tipResourceBundle = "*.lpack.BasicHubBalancerTips")
+		    tipResourceBundle = "*.lpack.BasicHubBalancerTips",
+		    stdFactory = "BasicHubBalancerFactory",
+		    namerVariable = "sim",
+		    namerDocumentation = "the simulation")
 public abstract class AbstrBasicHubBalancerFactory<Obj extends BasicHubBalancer>
     extends HubBalancerFactory<Obj>
 {

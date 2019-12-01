@@ -26,7 +26,10 @@ import java.util.LinkedHashSet;
  */
 @FactoryParmManager(value = "AbstrSchedDelayTblFactoryPM",
 		    labelResourceBundle = "*.lpack.SchedDelayTableLabels",
-		    tipResourceBundle = "*.lpack.SchedDelayTableTips")
+		    tipResourceBundle = "*.lpack.SchedDelayTableTips",
+		    stdFactory = "SchedDelayTableFactory",
+		    namerVariable = "sim",
+		    namerDocumentation = "the simulation")
 public abstract class AbstrSchedDelayTblFactory<Obj extends SchedDelayTable>
     extends DelayTableFactory<Obj>
 {

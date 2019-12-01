@@ -170,3 +170,6 @@ test20bPS: lib
 	rm -f test20b.eps
 	ps2eps -P test20b.ps
 	rm test20b.ps
+
+clean:
+	rm -rf classes

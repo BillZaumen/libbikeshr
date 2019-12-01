@@ -26,7 +26,10 @@ import java.util.LinkedHashSet;
  */
 @FactoryParmManager(value = "AbstrStdDelayTblFactoryPM",
 		    labelResourceBundle = "*.lpack.StdDelayTableLabels",
-		    tipResourceBundle = "*.lpack.StdDelayTableTips")
+		    tipResourceBundle = "*.lpack.StdDelayTableTips",
+		    stdFactory = "StdDelayTableFactory",
+		    namerVariable = "sim",
+		    namerDocumentation = "the simulation")
 public abstract class AbstrStdDelayTblFactory<Obj extends StdDelayTable>
     extends DelayTableFactory<Obj>
 {

@@ -24,7 +24,10 @@ import org.bzdev.util.units.MKS;
  */
 @FactoryParmManager(value = "AbstrHubFactoryPM",
 		    labelResourceBundle = "*.lpack.HubLabels",
-		    tipResourceBundle = "*.lpack.HubTips")
+		    tipResourceBundle = "*.lpack.HubTips",
+		    stdFactory = "HubFactory",
+		    namerVariable = "sim",
+		    namerDocumentation = "the simulation")
 public abstract class AbstractHubFactory<Obj extends Hub>
     extends AbstractActorFactory<Obj>
 {

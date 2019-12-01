@@ -24,7 +24,10 @@ import java.util.LinkedHashMap;
 
 @FactoryParmManager(value = "StorageHubFactoryPM",
 		    labelResourceBundle = "*.lpack.StorageHubLabels",
-		    tipResourceBundle = "*.lpack.StorageHubTips")
+		    tipResourceBundle = "*.lpack.StorageHubTips",
+		    stdFactory = "StorageHubFactory",
+		    namerVariable = "sim",
+		    namerDocumentation = "the simulation")
 public abstract class AbstrStorageHubFactory<Obj extends StorageHub>
     extends AbstractHubFactory<Obj>
 {

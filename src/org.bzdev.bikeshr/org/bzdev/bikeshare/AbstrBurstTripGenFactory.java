@@ -28,7 +28,10 @@ import java.util.LinkedHashMap;
 
 @FactoryParmManager(value = "BurstTripGenFactoryPM",
 		    labelResourceBundle = "*.lpack.BurstTripGenLabels",
-		    tipResourceBundle = "*.lpack.BurstTripGenTips")
+		    tipResourceBundle = "*.lpack.BurstTripGenTips",
+		    stdFactory = "BurstTripGenFactory",
+		    namerVariable = "sim",
+		    namerDocumentation = "the simulation")
 public abstract class AbstrBurstTripGenFactory<Obj extends BurstTripGenerator>
     extends TripGeneratorFactory<Obj>
 {

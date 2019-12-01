@@ -28,7 +28,10 @@ import java.util.LinkedHashMap;
 
 @FactoryParmManager(value = "RoundTripGenFactoryPM",
 		    labelResourceBundle = "*.lpack.RoundTripGenLabels",
-		    tipResourceBundle = "*.lpack.RoundTripGenTips")
+		    tipResourceBundle = "*.lpack.RoundTripGenTips",
+		    stdFactory = "RoundTripGenFactory",
+		    namerVariable = "sim",
+		    namerDocumentation = "the simulation")
 public abstract class AbstrRoundTripGenFactory<Obj extends RoundTripGenerator>
     extends TripGeneratorFactory<Obj>
 {
