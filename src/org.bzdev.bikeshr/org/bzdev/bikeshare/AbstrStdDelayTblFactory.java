@@ -17,9 +17,9 @@ import java.util.LinkedHashSet;
  * The factory parameters this factory provides are the same as the parameters
  * provided by its subclass {@link StdDelayTableFactory}:
  * <P>
- * <IFRAME SRC="../../../factories-api/org/bzdev/bikeshare/StdDelayTableFactory.html" width="95%" height="600">
+ * <IFRAME SRC="{@docRoot}/factories-api/org/bzdev/bikeshare/StdDelayTableFactory.html" style= "width:95%;height:500px;border:3px solid steelblue">
  * Please see
- *  <A HREF="../../../factories-api/org/bzdev/bikeshare/StdDelayTableFactory.html">
+ *  <A HREF="{@docRoot}/factories-api/org/bzdev/bikeshare/StdDelayTableFactory.html">
  *    the parameter documentation</A> for a table of the parameters supported
  * by this factory.
  * </IFRAME>

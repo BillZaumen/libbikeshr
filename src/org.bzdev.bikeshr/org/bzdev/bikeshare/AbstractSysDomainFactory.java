@@ -1,5 +1,6 @@
 package org.bzdev.bikeshare;
 import org.bzdev.drama.*;
+import org.bzdev.obnaming.annotations.FactoryParmManager;
 
 /**
  * Abstract Factory for creating system domains.
@@ -10,13 +11,17 @@ import org.bzdev.drama.*;
  * The factory parameters this factory provides are the same as the parameters
  * provided by its subclass {@link SysDomainFactory}:
  * <P>
- * <IFRAME SRC="../../../factories-api/org/bzdev/bikeshare/SysDomainFactory.html" width="95%" height="600">
+ * <IFRAME SRC="{@docRoot}/factories-api/org/bzdev/bikeshare/SysDomainFactory.html" style= "width:95%;height:500px;border:3px solid steelblue">
  * Please see
- *  <A HREF="../../../factories-api/org/bzdev/bikeshare/SysDomainFactory.html">
+ *  <A HREF="{@docRoot}/factories-api/org/bzdev/bikeshare/SysDomainFactory.html">
  *    the parameter documentation</A> for a table of the parameters supported
  * by this factory.
  * </IFRAME>
  */
+@FactoryParmManager(value = "SysDomainFactoryPM",
+		    stdFactory = "SysDomainFactory",
+		    namerVariable = "sim",
+		    namerDocumentation = "the simulation")
 public abstract class AbstractSysDomainFactory<Obj extends SysDomain>
     extends HubDomainFactory<Obj>
 {

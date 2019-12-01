@@ -62,14 +62,15 @@ JDOCS = *.html stylesheet.css package-list
 RDOCS = *.gif
 
 BZDEV = org/bzdev
+BIKESHR_DIR = ./src/org.bzdev.bikeshr
 
 $(JROOT_JARDIR)/libbzdev.jar: $(EXTDIR)/libbzdev.jar
 	mkdir -p $(JROOT_JARDIR)
 	ln -s $(EXTDIR)/libbzdev.jar $(JROOT_JARDIR)/libbzdev.jar
 
-JFILES = $(wildcard $(BZDEV)/bikeshare/*.java)
+JFILES = $(wildcard $(BIKESHR_DIR)/$(BZDEV)/bikeshare/*.java)
 
-RESOURCES = $(wildcard $(BZDEV)/bikeshare/lpack/*.properties)
+RESOURCES = $(wildcard $(BIKESHR_DIR)/$(BZDEV)/bikeshare/lpack/*.properties)
 
 
 include MajorMinor.mk
@@ -87,7 +88,6 @@ jarfile: $(JARFILE)
 NOF_SERVICE = org.bzdev.obnaming.NamedObjectFactory
 
 
-BIKESHR_DIR = ./src/org.bzdev.bikeshr
 BIKESHR_MODINFO = $(BIKESHR_DIR)/module-info.java
 BIKESHR_JFILES = $(wildcard $(BIKESHR_DIR)/$(BZDEV)/bikeshare/*.java)
 BIKESHR_RESOURCES1 = \
