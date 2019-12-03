@@ -17,7 +17,7 @@ import org.bzdev.obnaming.annotations.FactoryParmManager;
  * <P>
  * The parameter "parent" (provided by a superclass) was removed.
  */
-@FactoryParmManager(value="ExtDomainFactoryPM",
+@FactoryParmManager(value="",	// no parm manager needed
 		    stdFactory = "ExtDomainFactory",
 		    namerVariable = "sim",
 		    namerDocumentation = "the simulation"

@@ -18,7 +18,7 @@ import org.bzdev.obnaming.annotations.FactoryParmManager;
  * by this factory.
  * </IFRAME>
  */
-@FactoryParmManager(value = "SysDomainFactoryPM",
+@FactoryParmManager(value = "", // no parameters
 		    stdFactory = "SysDomainFactory",
 		    namerVariable = "sim",
 		    namerDocumentation = "the simulation")
