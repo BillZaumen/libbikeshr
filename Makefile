@@ -28,13 +28,13 @@ TMPSRC = $(JROOT)/tmpsrc
 #
 # System directories (that contains JAR files, etc.)
 #
-SYS_LIBJARDIR = /usr/share/bzdev
+SYS_LIBJARDIR = /usr/share/java
+SYS_BZDEVDIR = /usr/share/bzdev
 SYS_API_DOCDIR = /usr/share/doc/libbikeshr-doc
 SYS_JAVADOCS = $(SYS_API_DOCDIR)/api
 SYS_EXAMPLES = $(SYS_API_DOCDIR)/examples
 
-EXTDIR = $(SYS_LIBJARDIR)
-EXTLIBS = $(EXTDIR)
+EXTDIR = $(SYS_BZDEVDIR)
 
 ALL = jarfile javadocs
 
@@ -50,6 +50,7 @@ LIBJARDIR_SED=$(shell echo $(SYS_LIBJARDIR) | sed  s/\\//\\\\\\\\\\//g)
 API_DOCDIR = $(DESTDIR)$(SYS_API_DOCDIR)
 JAVADOCS = $(DESTDIR)$(SYS_JAVADOCS)
 EXAMPLES = $(DESTDIR)$(SYS_EXAMPLES)
+BZDEVDIR = $(DESTDIR)$(SYS_BZDEVDIR)
 
 JROOT_JARDIR = $(JROOT)/BUILD
 JROOT_LIBJARDIR = $(JROOT_JARDIR)
@@ -101,9 +102,9 @@ $(JARFILE): $(FILES)  $(TMPSRC) $(JROOT_JARDIR)/libbzdev.jar \
 	    META-INF/services/org.bzdev.obnaming.NamedObjectFactory
 	mkdir -p mods/org.bzdev.bikeshr
 	mkdir -p BUILD
-	javac -d mods/org.bzdev.bikeshr -p $(EXTLIBS) \
+	javac -d mods/org.bzdev.bikeshr -p $(EXTDIR) \
 		-Xlint:deprecation \
-		--processor-module-path $(EXTLIBS) \
+		--processor-module-path $(EXTDIR) \
 		-s tmpsrc/org.bzdev.bikeshr \
 		$(BIKESHR_MODINFO) $(BIKESHR_JFILES) \
 		$(BIKESHR_DIR)/$(BZDEV)/bikeshare/lpack/DefaultClass.java
@@ -156,7 +157,7 @@ javadocs: $(JROOT_JAVADOCS)/index.html
 altjavadocs: $(JROOT_ALT_JAVADOCS)/index.html
 
 JAVA_VERSION=11
-JAVADOC_LIBS = BUILD/libbikeshr.jar:$(EXTLIBS)
+JAVADOC_LIBS = BUILD/libbikeshr.jar:$(EXTDIR)
 
 $(JROOT_JAVADOCS)/index.html: $(JFILES)	overview.html  $(DIAGRAMS) $(JARFILE)
 	mkdir -p $(JROOT_JAVADOCS)
@@ -213,6 +214,9 @@ install-links:
 	rm -f $(LIBJARDIR)/libbikeshr.jar
 	ln -s $(LIBJARDIR)/libbikeshr-$(VERSION).jar \
 		$(LIBJARDIR)/libbikeshr.jar
+	rm -f $(BZDEVDIR)/libbikeshr.jar
+	ln -s $(LIBJARDIR)/libbikeshr-$(VERSION).jar \
+		$(BZDEVDIR)/libbikeshr.jar
 
 install-docs: javadocs
 	install -d $(API_DOCDIR)
@@ -226,3 +230,14 @@ install-docs: javadocs
 	install -d $(EXAMPLES)
 	install -m 0644 $(JROOT_EXAMPLES)/example1.js $(EXAMPLES)/example1.js
 	install -m 0644 $(JROOT_EXAMPLES)/example2.js $(EXAMPLES)/example2.js
+
+uninstall-lib:
+	rm -f $(LIBJARDIR)/libbikeshr-$(VERSION).jar
+
+uninstall-links:
+	rm -f $(LIBJARDIR)/libbikeshr.jar $(BZDEVDIR)/libbikeshr.jar
+
+uninstall-docs:
+	rm -rf $(JAVADOCS)
+	rm -rf $(EXAMPLES)
+	rmdir --ignore-fail-on-non-empty $(API_DOCDIR)
