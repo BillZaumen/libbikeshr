@@ -2,8 +2,8 @@ package org.bzdev.bikeshare;
 import org.bzdev.drama.*;
 import org.bzdev.math.stats.BasicStats;
 import org.bzdev.math.stats.BasicStats.Sample;
-import org.bzdev.util.StaticRandom;
-import org.bzdev.util.rv.DoubleRandomVariable;
+import org.bzdev.math.StaticRandom;
+import org.bzdev.math.rv.DoubleRandomVariable;
 import java.util.Map;
 import java.util.HashMap;
 import java.io.PrintWriter;
@@ -22,7 +22,7 @@ import java.io.PrintWriter;
  * the hub's coordinates will be used when an entry is missing from
  * the table.
  * <P>
- * A {@link org.bzdev.util.rv.DoubleRandomVariable} determines
+ * A {@link org.bzdev.math.rv.DoubleRandomVariable} determines
  * the average speed of travel, measured while in motion.
  * For each route, one can specify
  * <UL>

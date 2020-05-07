@@ -2,7 +2,7 @@ package org.bzdev.bikeshare;
 import org.bzdev.drama.*;
 import org.bzdev.obnaming.*;
 import org.bzdev.obnaming.annotations.*;
-import org.bzdev.util.rv.*;
+import org.bzdev.math.rv.*;
 import org.bzdev.util.units.MKS;
 
 /**

@@ -8,7 +8,6 @@ module org.bzdev.bikeshr {
     requires java.desktop;
     requires org.bzdev.base;
     requires org.bzdev.obnaming;
-    requires org.bzdev.desktop;
     requires org.bzdev.devqsim;
     requires org.bzdev.drama;
     provides org.bzdev.obnaming.NamedObjectFactory with

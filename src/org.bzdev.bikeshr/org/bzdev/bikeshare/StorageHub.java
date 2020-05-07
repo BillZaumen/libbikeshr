@@ -2,7 +2,7 @@
 package org.bzdev.bikeshare;
 import org.bzdev.drama.*;
 import org.bzdev.lang.Callable;
-import org.bzdev.util.rv.DoubleRandomVariable;
+import org.bzdev.math.rv.DoubleRandomVariable;
 
 import java.util.Collections;
 import java.util.LinkedHashSet;

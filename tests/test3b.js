@@ -15,7 +15,7 @@ scripting.importClass("org.bzdev.drama.DramaSimulation");
 scripting.importClass("org.bzdev.gio.OutputStreamGraphics");
 scripting.importClasses("org.bzdev.graphs",
 			["Graph", "AxisBuilder"]);
-scripting.importClass("org.bzdev.util.rv.GaussianRV");
+scripting.importClass("org.bzdev.math.rv.GaussianRV");
 scripting.importClass("org.bzdev.util.units.MKS");
 scripting.importClass("org.bzdev.util.VarArgsFormatter");
 

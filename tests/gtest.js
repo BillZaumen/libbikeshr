@@ -5,7 +5,7 @@ scripting.importClass
     ("org.bzdev.gio.OutputStreamGraphics");
 scripting.importClasses("org.bzdev.graphs",
                         ["Graph", "AxisBuilder"]);
-scripting.importClasses("org.bzdev.util.rv",
+scripting.importClasses("org.bzdev.math.rv",
                         ["GaussianRV", "PoissonIntegerRV"]);
 scripting.importClass("org.bzdev.util.units.MKS");
 

@@ -23,7 +23,7 @@ scripting.importClasses("org.bzdev.bikeshare",
 // bzdev class library
 scripting.importClass("org.bzdev.drama.DramaSimulation");
 scripting.importClass("org.bzdev.util.units.MKS");
-scripting.importClass("org.bzdev.util.rv.GaussianRV");
+scripting.importClass("org.bzdev.math.rv.GaussianRV");
 scripting.importClass("org.bzdev.util.VarArgsFormatter");
 
 // Set default values for comand-line variable that were not defined

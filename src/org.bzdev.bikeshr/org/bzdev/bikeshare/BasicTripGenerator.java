@@ -1,9 +1,9 @@
 package org.bzdev.bikeshare;
 import org.bzdev.drama.*;
 import org.bzdev.lang.Callable;
-import org.bzdev.util.StaticRandom;
-import org.bzdev.util.rv.DoubleRandomVariable;
-import org.bzdev.util.rv.ExpDistrRV;
+import org.bzdev.math.StaticRandom;
+import org.bzdev.math.rv.DoubleRandomVariable;
+import org.bzdev.math.rv.ExpDistrRV;
 import java.util.Arrays;
 
 import java.io.PrintWriter;

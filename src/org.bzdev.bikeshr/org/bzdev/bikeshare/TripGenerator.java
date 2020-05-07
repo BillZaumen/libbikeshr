@@ -4,9 +4,9 @@ import org.bzdev.devqsim.SimulationEvent;
 import org.bzdev.devqsim.SimFunctionTwo;
 import org.bzdev.lang.Callable;
 import org.bzdev.math.RealValuedFunctionTwo;
-import org.bzdev.util.StaticRandom;
-import org.bzdev.util.rv.DoubleRandomVariable;
-import org.bzdev.util.rv.ExpDistrRV;
+import org.bzdev.math.StaticRandom;
+import org.bzdev.math.rv.DoubleRandomVariable;
+import org.bzdev.math.rv.ExpDistrRV;
 
 import java.io.PrintWriter;
 import java.util.Vector;

@@ -2,8 +2,8 @@ package org.bzdev.bikeshare;
 import org.bzdev.devqsim.SimulationEvent;
 import org.bzdev.drama.*;
 import org.bzdev.lang.Callable;
-import org.bzdev.util.StaticRandom;
-import org.bzdev.util.rv.IntegerRandomVariable;
+import org.bzdev.math.StaticRandom;
+import org.bzdev.math.rv.IntegerRandomVariable;
 
 import java.io.PrintWriter;
 import java.lang.ref.WeakReference;

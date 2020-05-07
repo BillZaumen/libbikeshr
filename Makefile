@@ -98,6 +98,15 @@ BIKESHR_RESOURCES = $(subst ./src/,,$(BIKESHR_RESOURCES1))
 JDOC_MODULES = org.bzdev.bikeshr
 JDOC_EXCLUDE = org.bzdev.bikeshare.lpack
 
+LSNOF0= $(SYS_BZDEVDIR)/libbzdev-
+LSNOF1 = $(LSNOF0)base.jar:$(LSNOF0)math.jar:$(LSNOF0)obnaming.jar
+LSNOF2 = $(LSNOF0)devqsim.jar:$(LSNOF0)drama.jar
+LSNOF3 = $(SYS_BZDEVDIR)/lsnof.jar
+
+# need a custom version because librdanim.jar is in $(SYS_BZDEVDIR)
+# after the package is installed.
+LSNOF = java -p $(LSNOF1):$(LSNOF2):$(LSNOF3) -m org.bzdev.lsnof
+
 $(JARFILE): $(FILES)  $(TMPSRC) $(JROOT_JARDIR)/libbzdev.jar \
 	    META-INF/services/org.bzdev.obnaming.NamedObjectFactory
 	mkdir -p mods/org.bzdev.bikeshr
@@ -169,7 +178,7 @@ $(JROOT_JAVADOCS)/index.html: $(JFILES)	overview.html  $(DIAGRAMS) $(JARFILE)
 		-link file:///usr/share/doc/libbzdev-doc/api/ \
 		-overview overview.html \
 		--module $(JDOC_MODULES) -exclude $(JDOC_EXCLUDE)
-	lsnof -d $(JROOT_JAVADOCS) -p $(JROOT_JARDIR) \
+	$(LSNOF) -d $(JROOT_JAVADOCS) -p $(JROOT_JARDIR) \
 	      --link file:///usr/share/doc/openjdk-$(JAVA_VERSION)-doc/api/ \
 	      --link file:///usr/share/doc/libbzdev-doc/api/ \
 	      --overview src/FactoryOverview.html 'org.bzdev.bikeshare.*'

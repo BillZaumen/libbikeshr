@@ -2,8 +2,8 @@ package org.bzdev.bikeshare;
 import org.bzdev.drama.*;
 import org.bzdev.lang.*;
 import org.bzdev.lang.annotations.*;
-import org.bzdev.util.rv.DoubleRandomVariable;
-import org.bzdev.util.StaticRandom;
+import org.bzdev.math.rv.DoubleRandomVariable;
+import org.bzdev.math.StaticRandom;
 import org.bzdev.math.RealValuedFunctionTwo;
 import org.bzdev.devqsim.SimFunctionTwo;
 

@@ -2,7 +2,7 @@ import org.bzdev.bikeshare.*;
 import org.bzdev.drama.*;
 import org.bzdev.lang.Callable;
 import org.bzdev.util.units.MKS;
-import org.bzdev.util.rv.*;
+import org.bzdev.math.rv.*;
 import org.bzdev.devqsim.SimObject;
 
 import java.util.Arrays;
