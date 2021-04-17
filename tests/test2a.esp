@@ -1,0 +1,209 @@
+// Set up an output stream.
+var output = global.getWriter();
+
+// Import the classes we will explicitly need from the
+// bike-share library
+import (org.bzdev.bikeshare, [HubDataAdapter, TripDataAdapter,
+       UsrDomainFactory, SysDomainFactory, BasicHubBalancerFactory,
+       StorageHubFactory, StdDelayTableFactory, BasicTripGenFactory,
+       HubFactory, Hub, HubDomain, HubBalancer, DelayTable, TripGenerator]);
+
+// Import the classes we will explicitly need from the
+// bzdev class library
+import (org.bzdev.drama, [DramaSimulation, Actor]);
+
+import (org.bzdev.gio.OutputStreamGraphics);
+import (org.bzdev.graphs, [Graph, AxisBuilder, AxisBuilder.Linear]);
+import (org.bzdev.math.rv, [DoubleRandomVariable, GaussianRV]);
+import (org.bzdev.util.units.MKS);
+import (org.bzdev.util.VarArgsFormatter);
+
+// Import Java classes
+import (java.awt.Graphics2D);
+import (java.awt.geom.Path2D);
+import (java.awt.Color);
+import (java.awt.BasicStroke);
+import (org.bzdev.obnaming.misc.BasicStrokeBuilder);
+import (java.awt.geom, [Path2D, Path2D.Double]);
+
+var runningTime ?= MKS.hours(8.0);
+var gtype ?= "png";
+
+var g2d = null;
+var line1 = new Path2D.Double();
+var line2 = new Path2D.Double();
+
+var gout ?= null;
+var graph = null;
+var osg = null;
+
+// configure the simulation so there are 1000 simulation ticks per
+// second.
+var sim = new DramaSimulation(scripting, 1000.0);
+
+// Create the factories we'll use.
+sim.createFactories("org.bzdev.bikeshare", {
+    udf: "UsrDomainFactory",
+    sdf: "SysDomainFactory",
+    hbf: "BasicHubBalancerFactory",
+    hf: "HubFactory",
+    shf: "StorageHubFactory",
+    dtf: "StdDelayTableFactory",
+    btgf: "BasicTripGenFactory"
+});
+###
+
+(gout == null)? void:
+    function() {
+    // Set up a graph so that it is written to the output stream named
+    // gout.
+	osg = OutputStreamGraphics.newInstance(gout, 800, 600, gtype);
+	graph = new Graph(osg);
+	graph.setRanges(0.0, runningTime, 0.0, 10.0);
+	graph.setOffsets(100, 50, 100, 50);
+	var xab = new AxisBuilder.Linear(graph, 0.0, 0.0, runningTime, true,
+					 "Time (Seconds)");
+	xab.setMaximumExponent(4);
+	xab.addTickSpec(0, 0, true, "%4.0f");
+	xab.addTickSpec(2, 1, false, null);
+	graph.draw(xab.createAxis());
+	var yab = new AxisBuilder.Linear(graph, 0.0, 0.0, 10.0, false, "Count");
+	yab.setMaximumExponent(1);
+	yab.addTickSpec(0, 0, true, "%3.0f", "%3.0f");
+	yab.addTickSpec(2, 1, false, null);
+	graph.draw(yab.createAxis());
+	g2d = graph.createGraphics();
+    }();
+
+
+// Set up domains.
+var usrDomain = udf.createObject("usrDomain");
+var sysDomain = sdf.createObject("sysDomain");
+
+// Set up a load balancer.
+var balancer = hbf.createObject("balancer", {
+    "quietPeriod": MKS.minutes(30), "threshold": 0.75, "sysDomain": sysDomain
+});
+
+// set up random variables.
+var pickupTime = new GaussianRV(MKS.minutes(4.0), 30.0);
+pickupTime.setMinimum(10.0, true);
+
+var usrSpeedRV = new GaussianRV(MKS.mph(12.0), MKS.mph(3.0));
+usrSpeedRV.setMinimum(MKS.mph(5.0), true);
+
+var sysSpeedRV = new GaussianRV(MKS.mph(25.0), MKS.mph(3.0));
+sysSpeedRV.setMinimum(MKS.mph(5.0), true);
+
+// create hubs.
+var hub1 = hf.createObject("hub1", {
+    x: 0.0, y: 0.0,
+    capacity: 10, lowerTrigger: 3, nominal: 5, upperTrigger: 7,
+    pickupTime: pickupTime,
+    count: 5, overCount: 0,
+    usrDomain: usrDomain, sysDomain: sysDomain});
+
+var hub2 = hf.createObject("hub2", {
+    x: MKS.miles(1.0), y: 0.0,
+    capacity: 10, lowerTrigger: 3, nominal: 5, upperTrigger: 7,
+    pickupTime: pickupTime,
+    count: 5, overCount: 0,
+    usrDomain: usrDomain, sysDomain: sysDomain});
+
+// create a delay table
+
+var userTable = dtf.createObject("userTable", {
+    speedRV: usrSpeedRV, dist: MKS.miles(1.0),
+    nStops: 4, stopProbability: 0.4, maxWait: 30.0,
+    distFraction: 1.0,
+    domains: [usrDomain]});
+
+// create traffic generators
+var tgen1 = btgf.createObject("tgen1", [
+    {startingHub: hub1, meanIATime: MKS.minutes(10), nBicycles: 1},
+     {withPrefix: "dest",
+      withKey: hub2, config: {prob: 1.0, overflowProb: 0.0}}]);
+
+var tgen2 = btgf.createObject("tgen2", [
+    {startingHub: hub2, meanIATime: MKS.minutes(10), nBicycles: 1},
+     {withPrefix: "dest",
+      withKey: hub1,
+      config: {prob: 1.0, overflowProb: 0.0}}]);
+
+// print out the configuration of all the objects we created.
+[usrDomain, sysDomain, balancer, hub1, hub2, userTable, tgen1, tgen2]
+    .forEach(function(i) {
+	i.printConfiguration(output);
+	output.println("---------------------");
+    });
+
+// Track changes to each hub.
+//
+var last1 = hub1.getBikeCount();
+var last2 = hub2.getBikeCount();
+line1.moveTo(0.0, last1);
+line2.moveTo(0.0, last2);
+
+var dl = new HubDataAdapter({
+    hubChanged: function(hub, bc, newbc, oc, newoc, time, ticks) {
+	(hub == hub1)? function() {
+	    line1.lineTo(time,last1);
+	    newbc? function() {
+		last1 = bc;
+		line1.lineTo(time, last1);
+	    }(): void
+	}(): void;
+	(hub == hub2)? function() {
+	    line2.lineTo(time, last2);
+	    newbc? function() {
+		last2 = bc;
+		line2.lineTo(time,last2);
+	    }(): void
+	}(): void
+    }
+});
+
+hub1.addHubDataListener(dl);
+hub2.addHubDataListener(dl);
+
+// Track status of each trip
+
+var tripStarts = 0;
+var tripEnds = 0;
+var tripFails = 0;
+
+var tl = new TripDataAdapter(scripting, {
+    tripStarted: function(tripID, time, ticks, hub, domain) {
+	tripStarts = tripStarts + 1;
+    },
+    tripEnded: function (tripID, time, ticks, hub) {
+	tripEnds = tripEnds + 1;
+    },
+    tripFailedAtStart: function(tripID, time, ticks, hub) {
+	tripFails = tripFails + 1;
+    }
+});
+
+tgen1.addTripDataListener(tl);
+tgen2.addTripDataListener(tl);
+
+// run the simulation for runningTime seconds of simulation time
+
+sim.run(sim.getTicks(runningTime));
+
+output.println("number of initiated trips = " + tripStarts);
+output.println("number of completed trips = " + tripEnds);
+output.println("number of trips that failed to start = " + tripFails);
+
+(gout != null)? function() {
+    g2d.setStroke(new BasicStrokeBuilder()
+    		  .setWidth(1.5)
+		  .createStroke());
+    g2d.setColor(Color.GREEN);
+    graph.draw(g2d, line1);
+    g2d.setColor(Color.BLUE);
+    graph.draw(g2d, line2);
+    graph.write();
+    osg.close();
+    void
+}(): void
