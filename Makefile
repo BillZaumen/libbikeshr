@@ -71,7 +71,10 @@ $(JROOT_JARDIR)/libbzdev.jar: $(EXTDIR)/libbzdev.jar
 
 JFILES = $(wildcard $(BIKESHR_DIR)/$(BZDEV)/bikeshare/*.java)
 
-RESOURCES = $(wildcard $(BIKESHR_DIR)/$(BZDEV)/bikeshare/lpack/*.properties)
+RES1 = $(wildcard $(BIKESHR_DIR)/$(BZDEV)/bikeshare/provider/lpack/*.properties)
+RESOURCES = $(wildcard $(BIKESHR_DIR)/$(BZDEV)/bikeshare/lpack/*.properties) \
+	$(wildcard $(BIKESHR_DIR)/$(BZDEV)/bikeshare/provider/*.yaml) \
+	$(RES1)
 
 
 include MajorMinor.mk
@@ -79,7 +82,7 @@ include MajorMinor.mk
 $(TMPSRC):
 	mkdir -p $(TMPSRC)
 
-FILES = $(JFILES) $(RESOURCES) 
+FILES = $(JFILES) $(JFILES1) $(RESOURCES)
 
 JARFILE = $(JROOT_LIBJARDIR)/libbikeshr.jar
 BJARFILE = $(JROOT_JARDIR)/libbikeshr.jar
@@ -91,12 +94,19 @@ NOF_SERVICE = org.bzdev.obnaming.NamedObjectFactory
 
 BIKESHR_MODINFO = $(BIKESHR_DIR)/module-info.java
 BIKESHR_JFILES = $(wildcard $(BIKESHR_DIR)/$(BZDEV)/bikeshare/*.java)
+BIKESHR_JFILES1 = \
+	$(wildcard $(BIKESHR_DIR)/$(BZDEV)/bikeshare/provider/*.java)
+BTMP1 = $(BIKESHR_DIR)/$(BZDEV)/bikeshare/provider/lpack
 BIKESHR_RESOURCES1 = \
+	$(wildcard $(BIKESHR_DIR)/$(BZDEV)/bikeshare/provider/*.yaml) \
+	$(wildcard $(BTMP1)/*.properties) \
 	$(wildcard $(BIKESHR_DIR)/$(BZDEV)/bikeshare/lpack/*.properties)
 BIKESHR_RESOURCES = $(subst ./src/,,$(BIKESHR_RESOURCES1))
 
 JDOC_MODULES = org.bzdev.bikeshr
-JDOC_EXCLUDE = org.bzdev.bikeshare.lpack
+BSHR_PKG = org.bzdev.bikeshare
+JDOC_EXCLUDE = \
+	$(BSHR_PKG).lpack:$(BSHR_PKG).provider:$(BSHR_PKG).provider.lpack
 
 LSNOF0= $(SYS_BZDEVDIR)/libbzdev-
 LSNOF1 = $(LSNOF0)base.jar:$(LSNOF0)math.jar:$(LSNOF0)obnaming.jar
@@ -107,6 +117,10 @@ LSNOF3 = $(SYS_BZDEVDIR)/lsnof.jar
 # after the package is installed.
 LSNOF = java -p $(LSNOF1):$(LSNOF2):$(LSNOF3) -m org.bzdev.lsnof
 
+DEFAULTCLASS1 = $(BIKESHR_DIR)/$(BZDEV)/bikeshare/lpack/DefaultClass.java
+DEFAULTCLASS2 = \
+	$(BIKESHR_DIR)/$(BZDEV)/bikeshare/provider/lpack/DefaultClass.java
+
 $(JARFILE): $(FILES)  $(TMPSRC) $(JROOT_JARDIR)/libbzdev.jar \
 	    META-INF/services/org.bzdev.obnaming.NamedObjectFactory
 	mkdir -p mods/org.bzdev.bikeshr
@@ -115,8 +129,8 @@ $(JARFILE): $(FILES)  $(TMPSRC) $(JROOT_JARDIR)/libbzdev.jar \
 		-Xlint:deprecation \
 		--processor-module-path $(EXTDIR) \
 		-s tmpsrc/org.bzdev.bikeshr \
-		$(BIKESHR_MODINFO) $(BIKESHR_JFILES) \
-		$(BIKESHR_DIR)/$(BZDEV)/bikeshare/lpack/DefaultClass.java
+		$(BIKESHR_MODINFO) $(BIKESHR_JFILES) $(BIKESHR_JFILES1) \
+		 $(DEFAULTCLASS1) $(DEFAULTCLASS2)
 	for i in $(BIKESHR_RESOURCES) ; do mkdir -p mods/`dirname $$i` ; \
 		cp src/$$i mods/$$i ; done
 	mkdir -p mods/org.bzdev.bikeshr/META-INF/services

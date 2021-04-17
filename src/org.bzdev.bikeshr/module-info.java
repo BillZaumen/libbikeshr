@@ -3,7 +3,9 @@
  */
 module org.bzdev.bikeshr {
     exports org.bzdev.bikeshare;
+    exports org.bzdev.bikeshare.provider;
     opens org.bzdev.bikeshare.lpack;
+    opens org.bzdev.bikeshare.provider.lpack;
     requires java.base;
     requires java.desktop;
     requires org.bzdev.base;
@@ -23,4 +25,6 @@ module org.bzdev.bikeshr {
 	org.bzdev.bikeshare.ExtDomainFactory,
 	org.bzdev.bikeshare.SysDomainFactory,
 	org.bzdev.bikeshare.UsrDomainFactory;
+    provides org.bzdev.lang.spi.ONLauncherData with
+	org.bzdev.bikeshare.provider.BikeshareLauncherData;
 }

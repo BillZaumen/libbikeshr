@@ -1,0 +1,92 @@
+%YAML 1.2
+---
+  returnTypes:
+   - org.bzdev.bikeshare.BasicHubBalancer
+   - org.bzdev.bikeshare.BasicHubBalancerFactory
+   - org.bzdev.bikeshare.BasicTripGenerator
+   - org.bzdev.bikeshare.BasicTripGenFactory
+   - org.bzdev.bikeshare.BurstTripGenerator
+   - org.bzdev.bikeshare.BurstTripGenFactory
+   - org.bzdev.bikeshare.ExtDomain
+   - org.bzdev.bikeshare.ExtDomainFactory
+   - org.bzdev.bikeshare.Hub
+   - org.bzdev.bikeshare.Hub.TripMessage
+   - org.bzdev.bikeshare.HubCondition
+   - org.bzdev.bikeshare.HubDataAdapter
+   - org.bzdev.bikeshare.HubDataListener
+   - org.bzdev.bikeshare.HubDomain
+   - org.bzdev.bikeshare.HubFactory
+   - org.bzdev.bikeshare.HubWorker
+   - org.bzdev.bikeshare.HubWorkerAdapter
+   - org.bzdev.bikeshare.HubWorkerFactory
+   - org.bzdev.bikeshare.RoundTripGenerator
+   - org.bzdev.bikeshare.RoundTripGenFactory
+   - org.bzdev.bikeshare.SchedDelayTable
+   - org.bzdev.bikeshare.SchedDelayTableFactory
+   - org.bzdev.bikeshare.TripDataAdapter
+   - org.bzdev.bikeshare.TripDataListener
+   - org.bzdev.bikeshare.UsrDomain
+   - org.bzdev.bikeshare.UsrDomainFactory
+
+  argumentTypes:
+   - org.bzdev.bikeshare.BasicHubBalancer
+   - org.bzdev.bikeshare.BasicHubBalancerFactory
+   - org.bzdev.bikeshare.BasicTripGenerator
+   - org.bzdev.bikeshare.BasicTripGenFactory
+   - org.bzdev.bikeshare.BurstTripGenerator
+   - org.bzdev.bikeshare.BurstTripGenFactory
+   - org.bzdev.bikeshare.ExtDomain
+   - org.bzdev.bikeshare.ExtDomainFactory
+   - org.bzdev.bikeshare.Hub
+   - org.bzdev.bikeshare.Hub.TripMessage
+   - org.bzdev.bikeshare.HubCondition
+   - org.bzdev.bikeshare.HubDataAdapter
+   - org.bzdev.bikeshare.HubDataListener
+   - org.bzdev.bikeshare.HubDomain
+   - org.bzdev.bikeshare.HubFactory
+   - org.bzdev.bikeshare.HubWorker
+   - org.bzdev.bikeshare.HubWorkerAdapter
+   - org.bzdev.bikeshare.HubWorkerFactory
+   - org.bzdev.bikeshare.RoundTripGenerator
+   - org.bzdev.bikeshare.RoundTripGenFactory
+   - org.bzdev.bikeshare.SchedDelayTable
+   - org.bzdev.bikeshare.SchedDelayTableFactory
+   - org.bzdev.bikeshare.TripDataAdapter
+   - org.bzdev.bikeshare.TripDataListener
+   - org.bzdev.bikeshare.UsrDomain
+   - org.bzdev.bikeshare.UsrDomainFactory
+ 
+  functionClasses:
+   - org.bzdev.bikeshare.BikeShare
+
+  methodClasses:
+   - org.bzdev.bikeshare.BasicHubBalancer
+   - org.bzdev.bikeshare.BasicHubBalancerFactory
+   - org.bzdev.bikeshare.BasicTripGenerator
+   - org.bzdev.bikeshare.BasicTripGenFactory
+   - org.bzdev.bikeshare.BurstTripGenerator
+   - org.bzdev.bikeshare.BurstTripGenFactory
+   - org.bzdev.bikeshare.ExtDomain
+   - org.bzdev.bikeshare.ExtDomainFactory
+   - org.bzdev.bikeshare.Hub
+   - org.bzdev.bikeshare.Hub.TripMessage
+   - org.bzdev.bikeshare.HubCondition
+   - org.bzdev.bikeshare.HubDataAdapter
+   - org.bzdev.bikeshare.HubDataListener
+   - org.bzdev.bikeshare.HubDomain
+   - org.bzdev.bikeshare.HubFactory
+   - org.bzdev.bikeshare.HubWorker
+   - org.bzdev.bikeshare.HubWorkerAdapter
+   - org.bzdev.bikeshare.HubWorkerFactory
+   - org.bzdev.bikeshare.RoundTripGenerator
+   - org.bzdev.bikeshare.RoundTripGenFactory
+   - org.bzdev.bikeshare.SchedDelayTable
+   - org.bzdev.bikeshare.SchedDelayTableFactory
+   - org.bzdev.bikeshare.TripDataAdapter
+   - org.bzdev.bikeshare.TripDataListener
+   - org.bzdev.bikeshare.UsrDomain
+   - org.bzdev.bikeshare.UsrDomainFactory
+
+  fieldClasses:
+   - org.bzdev.bikeshare.HubWorker.Mode
+...

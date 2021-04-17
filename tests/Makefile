@@ -10,6 +10,23 @@ test2a: lib
 	scrunner -r -p ../BUILD/libbikeshr.jar \
 		-o:gout:test2a.svg -vS:gtype:svg test2a.js
 
+test2a-esp: lib
+	scrunner -r -p ../BUILD/libbikeshr.jar \
+		-o:gout:tmp.png  test2a.esp
+
+descr-yaml:
+	yrunner -p  ../BUILD/libbikeshr.jar \
+		--link /usr/share/doc/libbzdev-doc/api/ \
+		--link /usr/share/doc/openjdk-11-doc/api/ \
+		--link ../BUILD/api/ --generateDocs \
+		drama,bikeshr,graphics,rv > descr-yaml.html
+
+test2a-yaml: lib
+	yrunner -r -p  ../BUILD/libbikeshr.jar \
+		--stackTrace \
+		-o:gout:tmp.png -vS:gtype:png \
+		drama,bikeshr,graphics,rv test2a.yaml
+
 test2b: lib
 	scrunner -r -p ../BUILD/libbikeshr.jar \
 		-o:gout:test2b.svg -vS:gtype:svg test2b.js

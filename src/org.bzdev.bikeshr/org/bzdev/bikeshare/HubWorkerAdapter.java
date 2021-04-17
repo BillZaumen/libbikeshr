@@ -1,6 +1,8 @@
 package org.bzdev.bikeshare;
 import org.bzdev.scripting.ScriptListenerAdapter;
 import org.bzdev.scripting.ScriptingContext;
+import org.bzdev.util.ExpressionParser;
+import org.bzdev.util.ExpressionParser.ESPObject;
 
 /**
  * Adapter for hub-worker listeners.
@@ -23,6 +25,21 @@ public class HubWorkerAdapter extends ScriptListenerAdapter
     public HubWorkerAdapter() {
 	super(null,null);
     }
+
+    /**
+     * Constructor with only a script object.
+     * This creates an adapter for use with the ESP scripting language.
+     * <P>
+     * Note: This is equivalent to using the constructor
+     * {@link #HubWorkerAdapter(ScriptingContext,Object)} with
+     * a null first argument.
+     * @param scriptObject the scripting-language object implementing
+     *        the listener interface for this adapter.
+     */
+    public HubWorkerAdapter(ESPObject scriptObject) {
+	this(null, scriptObject);
+    }
+
 
     /**
      * Constructor given a scripting context and script object.

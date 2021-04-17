@@ -198,7 +198,7 @@ tgen2.addTripDataListener(tl);
 
 sim.run(sim.getTicks(runningTime));
 
-output.println("number of intitiated trips = " + tripStarts);
+output.println("number of initiated trips = " + tripStarts);
 output.println("number of completed trips = " + tripEnds);
 output.println("number of trips that failed to start = " + tripFails);
 
