@@ -128,8 +128,9 @@
     - = line1.moveTo(0.0, last1);
     - = line2.moveTo(0.0, last2);
 
-    - var dl = new HubDataAdapter({
-        hubChanged: function(hub, bc, newbc, oc, newoc, time, ticks) {
+    - !bzdev!esp >-
+        var dl = new HubDataAdapter({
+          hubChanged:function(hub, bc, newbc, oc, newoc, time, ticks) {
 	    (hub == hub1)? function() {
 	        line1.lineTo(time,last1);
 	        newbc? function() {
@@ -154,7 +155,8 @@
     - var tripEnds = 0;
     - var tripFails = 0;
 
-    - var tl = new TripDataAdapter({
+    - !bzdev!esp >-
+       var tl = new TripDataAdapter({
         tripStarted: function(tripID, time, ticks, hub, domain) {
 	    tripStarts = tripStarts + 1;
         },
@@ -176,7 +178,8 @@
     - = out.println("number of completed trips = " + tripEnds);
     - = out.println("number of trips that failed to start = " + tripFails);
 
-    - = (gout != null)? function() {
+    - !bzdev!esp >-
+       = (gout != null)? function() {
            g2d.setStroke(new BasicStrokeBuilder()
     		         .setWidth(1.5)
 		         .createStroke());
