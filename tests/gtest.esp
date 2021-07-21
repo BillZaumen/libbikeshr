@@ -1,0 +1,58 @@
+scripting.importClass
+    ("org.bzdev.gio.OutputStreamGraphics");
+scripting.importClasses("org.bzdev.graphs",
+                        ["Graph", "AxisBuilder", "AxisBuilder.Spacing",
+			 "AxisBuilder.ClockTime", "AxisBuilder.Linear"]);
+scripting.importClass("org.bzdev.util.units.MKS");
+
+// Import Java classes
+scripting.importClass("java.io.OutputStream");
+scripting.importClass("java.awt.geom.Path2D");
+scripting.importClass("java.awt.Color");
+scripting.importClass("java.awt.BasicStroke");
+
+scripting.finishImport();
+
+###
+
+// Set the running time if was not provided on
+// the command line:
+// scrunner ... -vD:runningTime:TIME_IN_HOURS
+var runningTime ?= 8.0;
+
+// convert from hours to seconds.
+runningTime = MKS.hours(runningTime);
+
+var gout;
+var gtype;
+
+var osg = (!var.gout || !var.gtype)? null:
+  OutputStreamGraphics.newInstance(gout, 800, 600, gtype);
+
+var g2d = null;
+
+(osg != null)? function() {
+    var graph = new Graph(osg);
+    graph.setRanges(0.0, runningTime, 0.0, 10.0);
+    graph.setOffsets(100, 50, 100, 50);
+    var xab = new AxisBuilder.ClockTime
+           (graph, 0.0, 0.0, runningTime, true,
+            "Time (HH:MM)");
+    xab.setSpacings(AxisBuilder.Spacing.MINUTES,
+                   AxisBuilder.Spacing.HOURS);
+    xab.addTickSpec
+      (0, AxisBuilder.Spacing.HOURS, "%1$TR");
+    xab.addTickSpec
+      (1, AxisBuilder.Spacing.THIRTY_MINUTES, null);
+    xab.addTickSpec
+      (2, AxisBuilder.Spacing.TEN_MINUTES, null);
+    graph.draw(xab.createAxis());
+    var yab = new AxisBuilder.Linear
+           (graph, 0.0, 0.0, 10.0, false, "Count");
+    yab.setMaximumExponent(1);
+    yab.addTickSpec(0, 0, true, "%3.0f", "%3.0f");
+    yab.addTickSpec(2, 1, false, null);
+    graph.draw(yab.createAxis());
+    graph.write();
+    void
+}(): void

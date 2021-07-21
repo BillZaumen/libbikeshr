@@ -27,89 +27,179 @@ test2a-yaml: lib
 		-o:gout:tmp.png -vS:gtype:png \
 		drama,bikeshr,graphics,rv test2a.yaml
 
-test2b: lib
+test2b-js: lib
 	scrunner -r -p ../BUILD/libbikeshr.jar \
 		-o:gout:test2b.svg -vS:gtype:svg test2b.js
 
-test2c: lib
+test2b-esp: lib
+	scrunner -r -p ../BUILD/libbikeshr.jar \
+		-o:gout:test2b.svg -vS:gtype:svg test2b.esp
+
+test2c-js: lib
 	scrunner -r -p ../BUILD/libbikeshr.jar \
 		-o:gout:test2c.svg -vS:gtype:svg test2c.js
 
-test2d: lib
+test2c-esp: lib
+	scrunner -r -p ../BUILD/libbikeshr.jar \
+		-o:gout:test2c.svg -vS:gtype:svg test2c.esp
+
+test2d-js: lib
 	scrunner -r -p ../BUILD/libbikeshr.jar \
 		-o:gout:test2d.svg -vS:gtype:svg test2d.js
 
-test2e: lib
+test2d-esp: lib
+	scrunner -r -p ../BUILD/libbikeshr.jar \
+		-o:gout:test2d.svg -vS:gtype:svg test2d.esp
+
+test2e-js: lib
 	scrunner -r -p ../BUILD/libbikeshr.jar \
 		-d:da:`pwd` -vS:filename:test2e.svg test2e.js
+test2e-esp: lib
+	scrunner -r -p ../BUILD/libbikeshr.jar \
+		-d:da:`pwd` -vS:filename:test2e.svg test2e.esp
 
-test2f: lib
+test2f-js: lib
 	scrunner -r -p ../BUILD/libbikeshr.jar \
 		-o:gout:test2f.svg -vS:gtype:svg test2f.js
 
-test2aPS: lib
+test2f-esp: lib
+	scrunner -r -p ../BUILD/libbikeshr.jar \
+		-o:gout:test2f.svg -vS:gtype:svg test2f.esp
+
+
+test2aPS-js: lib
 	scrunner -r -p ../BUILD/libbikeshr.jar \
 		-o:gout:test2a.ps -vS:gtype:ps test2a.js
 	ps2eps -P test2a.ps
 	rm test2a.ps
 
-test2bPS: lib
+test2aPS-esp: lib
+	scrunner -r -p ../BUILD/libbikeshr.jar \
+		-o:gout:test2a.ps -vS:gtype:ps test2a.esp
+	ps2eps -P test2a.ps
+	rm test2a.ps
+
+test2bPS-js: lib
 	scrunner -r -p ../BUILD/libbikeshr.jar \
 		-o:gout:test2b.ps -vS:gtype:ps test2b.js
 	ps2eps -P test2b.ps
 	rm test2b.ps
 
-test2cPS: lib
+test2bPS-esp: lib
+	scrunner -r -p ../BUILD/libbikeshr.jar \
+		-o:gout:test2b.ps -vS:gtype:ps test2b.esp
+	ps2eps -P test2b.ps
+	rm test2b.ps
+
+
+test2cPS-js: lib
 	scrunner -r -p ../BUILD/libbikeshr.jar \
 		-o:gout:test2c.ps -vS:gtype:ps test2c.js
 	ps2eps -P test2c.ps
 	rm test2c.ps
 
-test2dPS: lib
+test2cPS-esp: lib
+	scrunner -r -p ../BUILD/libbikeshr.jar \
+		-o:gout:test2c.ps -vS:gtype:ps test2c.esp
+	ps2eps -P test2c.ps
+	rm test2c.ps
+
+
+test2dPS-js: lib
 	scrunner -r -p ../BUILD/libbikeshr.jar \
 		-o:gout:test2d.ps -vS:gtype:ps test2d.js
 	ps2eps -P test2d.ps
 	rm test2d.ps
 
-test2ePS: lib
+test2dPS-esp: lib
+	scrunner -r -p ../BUILD/libbikeshr.jar \
+		-o:gout:test2d.ps -vS:gtype:ps test2d.esp
+	ps2eps -P test2d.ps
+	rm test2d.ps
+
+test2ePS-js: lib
 	scrunner -r -p ../BUILD/libbikeshr.jar \
 		-d:da:`pwd` -vS:filename:test2e.ps test2e.js
 	ps2eps -P test2e.ps
 	rm test2e.ps
 
-test2fPS: lib
+test2ePS-esp: lib
+	scrunner -r -p ../BUILD/libbikeshr.jar \
+		-d:da:`pwd` -vS:filename:test2e.ps test2e.esp
+	ps2eps -P test2e.ps
+	rm test2e.ps
+
+
+test2fPS-js: lib
 	scrunner -r -p ../BUILD/libbikeshr.jar \
 		-o:gout:test2f.ps -vS:gtype:ps test2f.js
 	ps2eps -P test2f.ps
 	rm test2f.ps
 
-
-test3a: lib
+test2fPS-esp: lib
 	scrunner -r -p ../BUILD/libbikeshr.jar \
-		-o:gout:test3a.svg -vS:gtype:svg test3a.js
+		-o:gout:test2f.ps -vS:gtype:ps test2f.esp
+	ps2eps -P test2f.ps
+	rm test2f.ps
 
-test3b: lib
+test3a-js: lib
 	scrunner -r -p ../BUILD/libbikeshr.jar \
-		-o:gout:test3b.svg -vS:gtype:svg test3b.js
+		-o:gout:test3a.svg -vS:gtype:svg --exit test3a.js
 
-test3aPS: lib
+test3a-esp: lib
+	scrunner -r -p ../BUILD/libbikeshr.jar \
+		-o:gout:test3a.svg -vS:gtype:svg --exit test3a.esp
+
+test3b-js: lib
+	scrunner -r -p ../BUILD/libbikeshr.jar --trustLevel=2 \
+		-o:gout:test3b.svg -vS:gtype:svg  --exit \
+		test3b.js
+
+test3b-esp: lib
+	scrunner -r -p ../BUILD/libbikeshr.jar  --trustLevel=2 \
+		-o:gout:test3b.svg -vS:gtype:svg  --exit \
+		test3b.esp
+
+
+test3aPS-js: lib
 	scrunner -r -p ../BUILD/libbikeshr.jar \
 		-o:gout:test3a.ps -vS:gtype:ps test3a.js
 	rm -f test3a.eps
 	ps2eps -P test3a.ps
 	rm test3a.ps
 
-test3bPS: lib
+test3aPS-esp: lib
 	scrunner -r -p ../BUILD/libbikeshr.jar \
-		-o:gout:test3b.ps -vS:gtype:ps test3b.js
+		-o:gout:test3a.ps -vS:gtype:ps test3a.esp
+	rm -f test3a.eps
+	ps2eps -P test3a.ps
+	rm test3a.ps
+
+
+test3bPS-js: lib
+	scrunner -r -p ../BUILD/libbikeshr.jar  --trustLevel=2 \
+		-o:gout:test3b.ps -vS:gtype:ps  --exit\
+		test3b.js
+	rm -f test3b.eps
+	ps2eps -P test3b.ps
+	rm test3b.ps
+
+test3bPS-esp: lib
+	scrunner -r -p ../BUILD/libbikeshr.jar  --exit  --trustLevel=2 \
+		-o:gout:test3b.ps -vS:gtype:ps test3b.esp
 	rm -f test3b.eps
 	ps2eps -P test3b.ps
 	rm test3b.ps
 
 
-test3f: lib
-	scrunner -r -p ../BUILD/libbikeshr.jar \
+test3f-js: lib
+	scrunner -r -p ../BUILD/libbikeshr.jar --exit \
 		-o:gout:test3f.svg -vS:gtype:svg test3f.js
+
+test3f-esp: lib
+	scrunner -r -p ../BUILD/libbikeshr.jar --exit \
+		-o:gout:test3f.svg -vS:gtype:svg test3f.esp
+
 
 test3fPS: lib
 	scrunner -r -p ../BUILD/libbikeshr.jar \
@@ -165,28 +255,52 @@ test1p: classes
 test2js: classes
 	scrunner -p ../BUILD/libbikeshr.jar --stackTrace test2.js
 
-test20a: lib
+test20a-js: lib
 	scrunner -r -p ../BUILD/libbikeshr.jar \
 		-o:gout:test20a.svg -vS:gtype:svg test20a.js
 
-test20b: lib
+test20a-esp: lib
+	scrunner -r -p ../BUILD/libbikeshr.jar \
+		-o:gout:test20a.svg -vS:gtype:svg test20a.esp
+
+
+test20b-js: lib
 	scrunner -r -p ../BUILD/libbikeshr.jar \
 		-o:gout:test20b.svg -vS:gtype:svg test20b.js
 
+test20b-esp: lib
+	scrunner -r -p ../BUILD/libbikeshr.jar \
+		-o:gout:test20b.svg -vS:gtype:svg test20b.esp
 
-test20aPS: lib
+
+test20aPS-js: lib
 	scrunner -r -p ../BUILD/libbikeshr.jar \
 		-o:gout:test20a.ps -vS:gtype:ps test20a.js
 	rm -f test20a.eps
 	ps2eps -P test20a.ps
 	rm test20a.ps
 
-test20bPS: lib
+test20aPS-esp: lib
+	scrunner -r -p ../BUILD/libbikeshr.jar \
+		-o:gout:test20a.ps -vS:gtype:ps test20a.esp
+	rm -f test20a.eps
+	ps2eps -P test20a.ps
+	rm test20a.ps
+
+test20bPS-js: lib
 	scrunner -r -p ../BUILD/libbikeshr.jar \
 		-o:gout:test20b.ps -vS:gtype:ps test20b.js
 	rm -f test20b.eps
 	ps2eps -P test20b.ps
 	rm test20b.ps
 
+test20bPS-esp: lib
+	scrunner -r -p ../BUILD/libbikeshr.jar \
+		-o:gout:test20b.ps -vS:gtype:ps test20b.esp
+	rm -f test20b.eps
+	ps2eps -P test20b.ps
+	rm test20b.ps
+
 clean:
 	rm -rf classes
+	rm -f tmp.png

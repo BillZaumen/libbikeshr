@@ -3,67 +3,82 @@ var output = scripting.getWriter();
 
 // Import the classes we will explicitly need from the
 // bike-share library
+
 scripting.importClasses("org.bzdev.bikeshare",
-			["HubDataAdapter",
-			 "TripDataAdapter",
-			 "HubWorkerAdapter"]);
+			["HubDataAdapter", "TripDataAdapter",
+			 "UsrDomainFactory", "UsrDomain",
+			 "SysDomainFactory", "SysDomain",
+			 "HubFactory", "Hub",
+			 "BasicHubBalancerFactory", "BasicHubBalancer",
+			 "StorageHubFactory", "StorageHub",
+			 "StdDelayTableFactory", "StdDelayTable",
+			 "BasicTripGenFactory", "BasicTripGenerator",
+			 "RoundTripGenFactory", "RoundTripGenerator"]);
+
 
 // Import the classes we will explicitly need from the
 // bzdev class library
 scripting.importClass("org.bzdev.drama.DramaSimulation");
 scripting.importClass("org.bzdev.gio.OutputStreamGraphics");
 scripting.importClasses("org.bzdev.graphs",
-			["Graph", "AxisBuilder"]);
+			["Graph", "AxisBuilder", "AxisBuilder.Linear",
+			 "AxisBuilder.Spacing", "AxisBuilder.ClockTime"]);
+
+scripting.importClass("org.bzdev.obnaming.misc.BasicStrokeBuilder");
 scripting.importClass("org.bzdev.math.rv.GaussianRV");
 scripting.importClass("org.bzdev.util.units.MKS");
 scripting.importClass("org.bzdev.util.VarArgsFormatter");
 
 // Import Java classes
 scripting.importClass("java.awt.geom.Path2D");
+scripting.importClass("java.awt.geom.Path2D.Double");
 scripting.importClass("java.awt.Color");
 scripting.importClass("java.awt.BasicStroke");
+scripting.importClass("java.awt.Graphics2D");
 
-var runningTime;
-if (typeof runningTime == "undefined") {
-    runningTime = MKS.hours(8.0);
-}
-if (typeof gtype == "undefined") {
-    gtype = "png";
-}
+scripting.finishImport();
 
+###
+
+var runningTime ?= MKS.hours(24.0);
+
+var gtype ?= "png";
+
+var line1 = new Path2D.Double();
+var line2 = new Path2D.Double();
+
+var gout ?= null;
+var graph = null;
 var g2d = null;
-line1 = new Path2D.Double();
-line2 = new Path2D.Double();
-linew = new Path2D.Double();
+var osg = null;
 
-var gout;
-if (typeof gout == undefined) {
-    gout = null;
-} else {
+(gout != null)? function () {
     // Set up a graph so that it is written to the output stream named
     // gout.
     osg = OutputStreamGraphics.newInstance(gout, 800, 600, gtype);
     graph = new Graph(osg);
-    graph.setRanges(0.0, runningTime, 0.0, 10.0);
+    graph.setRanges(0.0, runningTime, 0.0, 20.0);
     graph.setOffsets(100, 50, 100, 50);
-    xab = new AxisBuilder.Linear(graph, 0.0, 0.0, runningTime, true,
-				"Time (Seconds)");
-    xab.setMaximumExponent(4);
-    xab.addTickSpec(0, 0, true, "%4.0f");
-    xab.addTickSpec(2, 1, false, null);
+    var xab = new AxisBuilder.ClockTime(graph, 0.0, 0.0, runningTime, true,
+				"Time (Hours)");
+
+    xab.setSpacings(AxisBuilder.Spacing.SECONDS,
+		   AxisBuilder.Spacing.HOURS);
+    xab.addTickSpec(0, AxisBuilder.Spacing.HOURS, "%2$d");
+    xab.addTickSpec(1, AxisBuilder.Spacing.THIRTY_MINUTES,
+		    null);
+    xab.addTickSpec(2, AxisBuilder.Spacing.TEN_MINUTES,
+		    null);
     graph.draw(xab.createAxis());
-    yab = new AxisBuilder.Linear(graph, 0.0, 0.0, 10.0, false, "Count");
+    var yab = new AxisBuilder.Linear(graph, 0.0, 0.0, 20.0, false, "Count");
     yab.setMaximumExponent(1);
     yab.addTickSpec(0, 0, true, "%3.0f", "%3.0f");
     yab.addTickSpec(2, 1, false, null);
     graph.draw(yab.createAxis());
     g2d = graph.createGraphics();
-}
+    void
+}(): void;
 
-
-// Used due to Java 7 (Rhino ECMAScript implementation), which has
-// trouble with variable numbers of arguments
-var foutput = new VarArgsFormatter(output);
 
 // configure the simulation so there are 1000 simulation ticks per
 // second.
@@ -76,10 +91,12 @@ sim.createFactories("org.bzdev.bikeshare", {
     hbf: "BasicHubBalancerFactory",
     hf: "HubFactory",
     shf: "StorageHubFactory",
-    hwf: "HubWorkerFactory",
     dtf: "StdDelayTableFactory",
-    btgf: "BasicTripGenFactory"
+    btgf: "BasicTripGenFactory",
+    rtgf: "RoundTripGenFactory"
 });
+
+###
 
 // Set up domains.
 var usrDomain = udf.createObject("usrDomain");
@@ -100,42 +117,23 @@ usrSpeedRV.setMinimum(MKS.mph(5.0), true);
 var sysSpeedRV = new GaussianRV(MKS.mph(25.0), MKS.mph(3.0));
 sysSpeedRV.setMinimum(MKS.mph(5.0), true);
 
+var waitRV = new GaussianRV(MKS.minutes(15.0), MKS.minutes(3.0));
+waitRV.setMinimum(MKS.minutes(2.0), true);
+
 // create hubs.
 var hub1 = hf.createObject("hub1", {
     "x": 0.0, "y": 0.0,
-    "capacity": 10, "lowerTrigger": 3, "nominal": 5, "upperTrigger": 7,
+    "capacity": 20, "lowerTrigger": 6, "nominal": 10, "upperTrigger": 15,
     "pickupTime": pickupTime,
-    "count": 5, "overCount": 0,
+    "count": 10, "overCount": 0,
     "usrDomain": usrDomain, "sysDomain": sysDomain});
 
 var hub2 = hf.createObject("hub2", {
     "x": MKS.miles(1.0), "y": 0.0,
-    "capacity": 10, "lowerTrigger": 3, "nominal": 5, "upperTrigger": 7,
+    "capacity": 20, "lowerTrigger": 6, "nominal": 10, "upperTrigger": 14,
     "pickupTime": pickupTime,
-    "count": 5, "overCount": 0,
+    "count": 10, "overCount": 0,
     "usrDomain": usrDomain, "sysDomain": sysDomain});
-
-//create a storage hub
-
-var storageHub = shf.createObject("storageHub", [
-    {
-	"sysDomain": sysDomain,
-	x: MKS.miles(0.25), y: 0.0,
-	"nworkersNoPickup": 1,
-	"intervalNoPickup": MKS.minutes(30.0)
-    },
-    {
-	withPrefix: "hubTable",
-	withIndex: [{"hub": hub1}, {"hub": hub2}]
-    }
-]);
-
-// create a worker
-var worker1 = hwf.createObject("worker1", {
-    "sysDomain": sysDomain,
-    "capacity": 5,
-    "storageHub": storageHub
-});
 
 // create a delay table
 
@@ -145,31 +143,26 @@ var userTable = dtf.createObject("userTable", {
     "distFraction": 1.0,
     "domains": [usrDomain]});
 
-var sysTable = dtf.createObject("sysTable", {
-    "speedRV": sysSpeedRV, "dist": MKS.miles(1.0),
-    "nStops": 4, "stopProbability": 0.4, "maxWait": 30.0,
-    "distFraction": 1.0,
-    "domains": [sysDomain]});
-
-
 // create traffic generators
-var tgen1 = btgf.createObject("tgen1", [
-    {"startingHub": hub1, "meanIATime": MKS.minutes(10), "nBicycles": 1},
+var tgen1 = rtgf.createObject("tgen1", [
+    {"startingHub": hub1, "meanIATime": MKS.minutes(10), "nBicycles": 1,
+     "wait": waitRV},
      {withPrefix: "dest",
       withKey: hub2, config: {"prob": 1.0, "overflowProb": 0.0}}]);
 
-var tgen2 = btgf.createObject("tgen2", [
-    {"startingHub": hub2, "meanIATime": MKS.minutes(10), "nBicycles": 1},
+var tgen2 = rtgf.createObject("tgen2", [
+    {"startingHub": hub2, "meanIATime": MKS.minutes(10), "nBicycles": 1,
+     "wait": waitRV},
      {withPrefix: "dest",
       withKey: hub1,
       config: {"prob": 1.0, "overflowProb": 0.0}}]);
 
 // print out the configuration of all the objects we created.
-for each (var i in [usrDomain, sysDomain, balancer, hub1, hub2,
-		    userTable, tgen1, tgen2]) {
+[usrDomain, sysDomain, balancer, hub1, hub2, userTable, tgen1, tgen2]
+    .stream().forEach(function(i) {
     i.printConfiguration(output);
     output.println("---------------------");
-}
+    });
 
 // Track changes to each hub.
 //
@@ -180,21 +173,23 @@ line2.moveTo(0.0, last2);
 
 var dl = new HubDataAdapter(scripting, {
     hubChanged: function(hub, bc, newbc, oc, newoc, time, ticks) {
-	if (hub == hub1) {
+	(hub == hub1)? function() {
 	    line1.lineTo(time, last1);
-	    if (newbc) {
+	    newbc && function() {
 		last1 = bc;
 		line1.lineTo(time, last1);
-	    }
-
-	}
-	if (hub == hub2) {
+		true;
+	    }();
+	}():
+	(hub == hub2)? function() {
 	    line2.lineTo(time, last2);
-	    if (newbc) {
+	    newbc && function() {
 		last2 = bc;
 		line2.lineTo(time, last2);
-	    }
-	}
+		true
+	    }();
+	    void
+	}(): void;
     }
 });
 
@@ -206,43 +201,34 @@ hub2.addHubDataListener(dl);
 var tripStarts = 0;
 var tripEnds = 0;
 var tripFails = 0;
+var midstreamFails = 0;
 
 var tl = new TripDataAdapter(scripting, {
     tripStarted: function(tripID, time, ticks, hub, domain) {
-	tripStarts++;
+	tripStarts = tripStarts + 1;
     },
+    tripPauseStart: function (tripID, time, ticks, hub) {
+	tripEnds = tripEnds + 1;
+    },
+
+    tripPauseEnd: function(tripID, time, ticks, hub, domain) {
+	tripStarts = tripStarts + 1;
+    },
+
     tripEnded: function (tripID, time, ticks, hub) {
-	tripEnds++;
+	tripEnds = tripEnds + 1
     },
     tripFailedAtStart: function(tripID, time, ticks, hub) {
-	tripFails++;
+	tripFails = tripEnds + 1;
+    },
+    tripFailedMidstream: function(tripID, time, ticks, hub) {
+	tripFails = tripFails + 1;
+	midstreamFails = midstreamFails + 1;
     }
 });
 
 tgen1.addTripDataListener(tl);
 tgen2.addTripDataListener(tl);
-
-// monitor the worker
-
-var lastw = worker1.getBikeCount();
-linew.moveTo(0.0, lastw);
-
-
-var wl = new HubWorkerAdapter(scripting, {
-    changedCount: function(worker, time, ticks, hub, oldcount, newcount) {
-	if (lastw != 0) {
-	    linew.lineTo(time, lastw);
-	} else {
-	    linew.moveTo(time, lastw);
-	}
-	if (lastw != newcount) {
-	    lastw = newcount;
-	    linew.lineTo(time, lastw);
-	}
-    }
-});
-
-worker1.addHubWorkerListener(wl);
 
 // run the simulation for runningTime seconds of simulation time
 
@@ -251,15 +237,17 @@ sim.run(sim.getTicks(runningTime));
 output.println("number of intitiated trips = " + tripStarts);
 output.println("number of completed trips = " + tripEnds);
 output.println("number of trips that failed to start = " + tripFails);
+output.println("number of midstream failures = " + midstreamFails);
 
-if (gout != null) {
-    g2d.setStroke(new BasicStroke(1.5));
+
+(gout != null) && function() {
+    g2d.setStroke(new BasicStrokeBuilder().setWidth(2.0).createStroke());
     g2d.setColor(Color.GREEN);
     graph.draw(g2d, line1);
     g2d.setColor(Color.BLUE);
     graph.draw(g2d, line2);
-    g2d.setColor(Color.YELLOW);
-    graph.draw(g2d, linew);
     graph.write();
     osg.close();
-}
+    true
+}();
+void

@@ -234,7 +234,6 @@ if (gout != null) {
     line2.lineTo(runningTime, last2);
     line3.lineTo(runningTime, last3);
 
-
     g2d.setStroke(new BasicStroke(1.5));
     g2d.setColor(Color.BLUE);
     graph.draw(g2d, line2);

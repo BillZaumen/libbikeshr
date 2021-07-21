@@ -216,5 +216,4 @@ if (gout != null) {
     graph.draw(g2d, line2);
     graph.write();
     osg.close();
-
 }
