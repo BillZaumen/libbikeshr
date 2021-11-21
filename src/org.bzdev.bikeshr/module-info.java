@@ -3,7 +3,6 @@
  */
 module org.bzdev.bikeshr {
     exports org.bzdev.bikeshare;
-    exports org.bzdev.bikeshare.provider;
     opens org.bzdev.bikeshare.lpack;
     opens org.bzdev.bikeshare.provider.lpack;
     requires java.base;

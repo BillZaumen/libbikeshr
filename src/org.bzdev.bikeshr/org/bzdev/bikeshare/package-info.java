@@ -16,7 +16,7 @@
  * The classes used during the execution of a simulation, excluding
  * any instrumentation, are shown in the following figure:
  * <P style="text-align: center">
- * <img src="doc-files/simclasses.png">
+ * <img src="doc-files/simclasses.png" class="imgBackground">
  * <P>
  *
  * <A anchor="factories"><H2>Classes used to configure a simulation</H2></A>
@@ -25,12 +25,12 @@
  * simulation objects.  The factories that create actors are shown
  * in the following figure:
  * <P style="text-align: center">
- * <img src="doc-files/factories1.png">
+ * <img src="doc-files/factories1.png" class="imgBackground">
  * <P>
  * Similarly, the factories that configure domains and
  * delay tables are shown in the following figure:
  * <P style="text-align: center">
- * <img src="doc-files/factories2.png">
+ * <img src="doc-files/factories2.png" class="imgBackground">
  * <P>
  * As mentioned in the top-level overview, the factories should be
  * used in the following order or a similar order:
@@ -82,7 +82,7 @@
  * Classes used to instrument simulations can use instances of the
  * classes shown in the following figure:
  * <P style="text-align: center">
- * <img src="doc-files/instrument.png">
+ * <img src="doc-files/instrument.png" class="imgBackground">
  * <P>
  * For simulations written totally in Java, one could use the interfaces
  * directly although using the adapters may be more convenient in cases

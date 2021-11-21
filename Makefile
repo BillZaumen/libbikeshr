@@ -79,6 +79,12 @@ RESOURCES = $(wildcard $(BIKESHR_DIR)/$(BZDEV)/bikeshare/lpack/*.properties) \
 
 include MajorMinor.mk
 
+#
+# Set DARKMODE to --darkmode to turn on dark mode.
+#
+DARKMODE =
+
+
 $(TMPSRC):
 	mkdir -p $(TMPSRC)
 
@@ -90,7 +96,6 @@ BJARFILE = $(JROOT_JARDIR)/libbikeshr.jar
 jarfile: $(JARFILE)
 
 NOF_SERVICE = org.bzdev.obnaming.NamedObjectFactory
-
 
 BIKESHR_MODINFO = $(BIKESHR_DIR)/module-info.java
 BIKESHR_JFILES = $(wildcard $(BIKESHR_DIR)/$(BZDEV)/bikeshare/*.java)
@@ -155,25 +160,43 @@ DIAGRAMS = $(BIKESHR_DIR)/org/bzdev/bikeshare/doc-files/simclasses.png \
 
 diagrams: $(DIAGRAMS)
 
+diaclean:
+	rm $(DIAGRAMS)
+
+
+#
+# When dia exports SVG, the background is transparent, but not when
+# dia exports PNG.  So, the following first creates an SVG file
+# and then uses inkscape to export a PNG file beecause inscape does
+# not fill transparent areas.
+
 $(BIKESHR_DIR)/org/bzdev/bikeshare/doc-files/simclasses.png: \
 		diagrams/simclasses.dia
 	mkdir -p $(BIKESHR_DIR)/org/bzdev/bikeshare/doc-files
-	dia -s 700x -e $@ $<
+	dia -s 700x -e tmp.svg $<
+	inkscape -w 700 --export-filename=$@ tmp.svg
+	rm tmp.svg
 
 $(BIKESHR_DIR)/org/bzdev/bikeshare/doc-files/factories1.png: \
 		diagrams/factories1.dia
 	mkdir -p $(BIKESHR_DIR)/org/bzdev/bikeshare/doc-files
-	dia -s 700x -e $@ $<
+	dia -s 700x -e tmp.svg $<
+	inkscape -w 700 --export-filename=$@ tmp.svg
+	rm tmp.svg
 
 $(BIKESHR_DIR)/org/bzdev/bikeshare/doc-files/factories2.png: \
 		diagrams/factories2.dia
 	mkdir -p $(BIKESHR_DIR)/org/bzdev/bikeshare/doc-files
-	dia -s 700x -e $@ $<
+	dia -s 700x -e tmp.svg $<
+	inkscape -w 700 --export-filename=$@ tmp.svg
+	rm tmp.svg
 
 $(BIKESHR_DIR)/org/bzdev/bikeshare/doc-files/instrument.png: \
 		diagrams/instrument.dia
 	mkdir -p $(BIKESHR_DIR)/org/bzdev/bikeshare/doc-files
-	dia -s 700x -e $@ $<
+	dia -s 700x -e tmp.svg $<
+	inkscape -w 700 --export-filename=$@ tmp.svg
+	rm tmp.svg
 
 javadocs: $(JROOT_JAVADOCS)/index.html
 
@@ -185,14 +208,17 @@ JAVADOC_LIBS = BUILD/libbikeshr.jar:$(EXTDIR)
 $(JROOT_JAVADOCS)/index.html: $(JFILES)	overview.html  $(DIAGRAMS) $(JARFILE)
 	mkdir -p $(JROOT_JAVADOCS)
 	rm -rf $(JROOT_JAVADOCS)/*
+	styleoption=`[ -z "$(DARKMODE)" ] && echo \
+		|| echo --main-stylesheet stylesheet.css`; \
 	javadoc -d $(JROOT_JAVADOCS) --module-path $(JAVADOC_LIBS) \
 		--module-source-path src:tmpsrc \
 		--add-modules org.bzdev.bikeshr \
+		$$styleoption \
 		-link file:///usr/share/doc/openjdk-$(JAVA_VERSION)-doc/api \
 		-link file:///usr/share/doc/libbzdev-doc/api/ \
 		-overview overview.html \
 		--module $(JDOC_MODULES) -exclude $(JDOC_EXCLUDE)
-	$(LSNOF) -d $(JROOT_JAVADOCS) -p $(JROOT_JARDIR) \
+	$(LSNOF) $(DARKMODE) -d $(JROOT_JAVADOCS) -p $(JROOT_JARDIR) \
 	      --link file:///usr/share/doc/openjdk-$(JAVA_VERSION)-doc/api/ \
 	      --link file:///usr/share/doc/libbzdev-doc/api/ \
 	      --overview src/FactoryOverview.html 'org.bzdev.bikeshare.*'
@@ -201,9 +227,12 @@ $(JROOT_ALT_JAVADOCS)/index.html: $(RDANIM_JFILES) overview.html $(JARFILE) \
 		$(JROOT_JAVADOCS)/index.html
 	mkdir -p $(JROOT_ALT_JAVADOCS)
 	rm -rf $(JROOT_ALT_JAVADOCS)/*
+	styleoption=`[ -z "$(DARKMODE)" ] && echo \
+		|| echo --main-stylesheet stylesheet.css`; \
 	javadoc -d $(JROOT_ALT_JAVADOCS) --module-path $(JAVADOC_LIBS) \
 		--module-source-path src:tmpsrc \
 		--add-modules org.bzdev.bikeshr \
+		$$styleoption \
 		-linkoffline ../../../bzdev/doc/api \
 			file:///usr/share/doc/libbzdev-doc/api/ \
 		-linkoffline \
@@ -211,7 +240,7 @@ $(JROOT_ALT_JAVADOCS)/index.html: $(RDANIM_JFILES) overview.html $(JARFILE) \
 		    file:///usr/share/doc/openjdk-$(JAVA_VERSION)-doc/api \
 		-overview overview.html \
 		--module $(JDOC_MODULES) -exclude $(JDOC_EXCLUDE)
-	lsnof -d $(JROOT_ALT_JAVADOCS) -p $(JARFILE) \
+	lsnof $(DARKMODE) -d $(JROOT_ALT_JAVADOCS) -p $(JARFILE) \
 	      --link-offline \
 	   https://docs.oracle.com/en/java/javase/$(JAVA_VERSION)/docs/api/ \
 			file:///usr/share/doc/openjdk-$(JAVA_VERSION)-doc/api/ \
