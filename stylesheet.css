@@ -24,6 +24,23 @@ a:active {
 a[name] {
     color:#353833;
 }
+/*
+* From the original style sheet but with modified distances.
+* This stops the header from hiding the start of a link.
+*/
+a[id]:target {
+    content:"";
+    display:inline-block;
+    position:relative;
+    padding-top:120px;
+    margin-top:-120px;
+}
+/*
+* Added to prevent the previous change from messing up the
+* bar at the top of the screen.
+*/
+ul.navList a[id]:target {}
+
 a[name]:hover {
     text-decoration:none;
     color:#353833;
