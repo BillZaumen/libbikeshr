@@ -36,6 +36,14 @@ SYS_EXAMPLES = $(SYS_API_DOCDIR)/examples
 
 EXTDIR = $(SYS_BZDEVDIR)
 
+JAVA_VERSION=11
+JAVADOC_LIBS = BUILD/libbikeshr.jar:$(EXTDIR)
+JAVAC = javac --release $(JAVA_VERSION)
+JAVADOC = javadoc --release $(JAVA_VERSION) -Xdoclint:all,-html
+
+JAVADOC_VERSION = $(shell javadoc --version | sed -e 's/javadoc //' \
+		| sed -e 's/[.].*//')
+
 ALL = jarfile javadocs
 
 all: $(ALL)
@@ -130,7 +138,7 @@ $(JARFILE): $(FILES)  $(TMPSRC) $(JROOT_JARDIR)/libbzdev.jar \
 	    META-INF/services/org.bzdev.obnaming.NamedObjectFactory
 	mkdir -p mods/org.bzdev.bikeshr
 	mkdir -p BUILD
-	javac -d mods/org.bzdev.bikeshr -p $(EXTDIR) \
+	$(JAVAC) -d mods/org.bzdev.bikeshr -p $(EXTDIR) \
 		-Xlint:deprecation \
 		--processor-module-path $(EXTDIR) \
 		-s tmpsrc/org.bzdev.bikeshr \
@@ -202,15 +210,14 @@ javadocs: $(JROOT_JAVADOCS)/index.html
 
 altjavadocs: $(JROOT_ALT_JAVADOCS)/index.html
 
-JAVA_VERSION=11
-JAVADOC_LIBS = BUILD/libbikeshr.jar:$(EXTDIR)
 
-$(JROOT_JAVADOCS)/index.html: $(JFILES)	overview.html  $(DIAGRAMS) $(JARFILE)
+$(JROOT_JAVADOCS)/index.html: $(JFILES)	overview.html  $(DIAGRAMS) $(JARFILE) \
+		stylesheet$(JAVADOC_VERSION).css src/description.html
 	mkdir -p $(JROOT_JAVADOCS)
 	rm -rf $(JROOT_JAVADOCS)/*
 	styleoption=`[ -z "$(DARKMODE)" ] && echo \
-		|| echo --main-stylesheet stylesheet.css`; \
-	javadoc -d $(JROOT_JAVADOCS) --module-path $(JAVADOC_LIBS) \
+		|| echo --main-stylesheet stylesheet$(JAVADOC_VERSION).css`; \
+	$(JAVADOC) -d $(JROOT_JAVADOCS) --module-path $(JAVADOC_LIBS) \
 		--module-source-path src:tmpsrc \
 		--add-modules org.bzdev.bikeshr \
 		$$styleoption \
@@ -218,6 +225,13 @@ $(JROOT_JAVADOCS)/index.html: $(JFILES)	overview.html  $(DIAGRAMS) $(JARFILE)
 		-link file:///usr/share/doc/libbzdev-doc/api/ \
 		-overview overview.html \
 		--module $(JDOC_MODULES) -exclude $(JDOC_EXCLUDE)
+	cp stylesheet11.css $(JROOT_JAVADOCS)
+	cp stylesheet17.css $(JROOT_JAVADOCS)
+	mkdir -p $(JROOT_JAVADOCS)/doc-files
+	dstylesheet=`[ -z "$(DARKMODE)" ] && echo stylesheet.css \
+		|| echo stylesheet$(JAVADOC_VERSION).css` ; \
+	sed -e s/stylesheet.css/$$dstylesheet/ src/description.html \
+		> $(JROOT_JAVADOCS)/doc-files/description.html
 	$(LSNOF) $(DARKMODE) -d $(JROOT_JAVADOCS) -p $(JROOT_JARDIR) \
 	      --link file:///usr/share/doc/openjdk-$(JAVA_VERSION)-doc/api/ \
 	      --link file:///usr/share/doc/libbzdev-doc/api/ \
@@ -229,7 +243,7 @@ $(JROOT_ALT_JAVADOCS)/index.html: $(RDANIM_JFILES) overview.html $(JARFILE) \
 	rm -rf $(JROOT_ALT_JAVADOCS)/*
 	styleoption=`[ -z "$(DARKMODE)" ] && echo \
 		|| echo --main-stylesheet stylesheet.css`; \
-	javadoc -d $(JROOT_ALT_JAVADOCS) --module-path $(JAVADOC_LIBS) \
+	$(JAVADOC) -d $(JROOT_ALT_JAVADOCS) --module-path $(JAVADOC_LIBS) \
 		--module-source-path src:tmpsrc \
 		--add-modules org.bzdev.bikeshr \
 		$$styleoption \
@@ -240,6 +254,13 @@ $(JROOT_ALT_JAVADOCS)/index.html: $(RDANIM_JFILES) overview.html $(JARFILE) \
 		    file:///usr/share/doc/openjdk-$(JAVA_VERSION)-doc/api \
 		-overview overview.html \
 		--module $(JDOC_MODULES) -exclude $(JDOC_EXCLUDE)
+	cp stylesheet11.css $(JROOT_JAVADOCS)
+	cp stylesheet17.css $(JROOT_JAVADOCS)
+	mkdir -p $(JROOT_JAVADOCS)/doc-files
+	dstylesheet=`[ -z "$(DARKMODE)" ] && echo stylesheet.css \
+		|| echo stylesheet$(JAVADOC_VERSION).css` ; \
+	sed -e s/stylesheet.css/$$dstylesheet/ src/description.html \
+		> $(JROOT_JAVADOCS)/doc-files/description.html
 	lsnof $(DARKMODE) -d $(JROOT_ALT_JAVADOCS) -p $(JARFILE) \
 	      --link-offline \
 	   https://docs.oracle.com/en/java/javase/$(JAVA_VERSION)/docs/api/ \

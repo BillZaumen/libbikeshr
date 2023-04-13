@@ -18,6 +18,9 @@ public class SysDomain extends HubDomain {
     static String COMM_DOMAIN_NAME = "sysDomain";
     private HubCondition condition;
 
+    /**
+     * The Communication domain type for system domains.
+     */
     public static final CommDomainType commDomainType
 	= CommDomainType.findType(COMM_DOMAIN_NAME);
 
@@ -28,7 +31,7 @@ public class SysDomain extends HubDomain {
 
     HubListener hubListener;
 
-    /*
+    /**
      * Constructor.
      * @param sim the simulation
      * @param name the name of this object

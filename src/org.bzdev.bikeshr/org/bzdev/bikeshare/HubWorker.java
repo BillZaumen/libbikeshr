@@ -299,6 +299,8 @@ public class HubWorker extends Actor {
     /**
      * Indicate that a worker's bicycle count has changed.
      * @param hub the hub at which this event occurred
+     * @param oldCount the old value of the bicycle count
+     * @param newCount the new value fo the bicycle count
      */
     protected void fireChangedCount(Hub hub, int oldCount, int newCount) {
 	double time = sim.currentTime();
@@ -321,7 +323,8 @@ public class HubWorker extends Actor {
 	public void sort();
 	/**
 	 * Get the hubs for this hub worker, listed in the
-	 * traversal for this hub.
+	 * traversal order for this hub.
+	 * @return the hubs
 	 */
 	public abstract Hub[] getHubs();
 	/**

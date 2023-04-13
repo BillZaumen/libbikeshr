@@ -11,7 +11,6 @@ import org.bzdev.util.units.MKS;
  * <P>
  * The factory parameters this factory provides are the same as the parameters
  * provided by its subclass {@link BasicHubBalancerFactory}:
- * <P>
  * <IFRAME SRC="{@docRoot}/factories-api/org/bzdev/bikeshare/BasicHubBalancerFactory.html" style= "width:95%;height:500px;border:3px solid steelblue">
  * Please see
  *  <A HREF="{@docRoot}/factories-api/org/bzdev/bikeshare/BasicHubBalancerFactory.html">
@@ -44,6 +43,10 @@ public abstract class AbstrBasicHubBalancerFactory<Obj extends BasicHubBalancer>
 
     BasicHubBalancerFactoryPM<Obj> pm;
 
+    /**
+     * Constructor.
+     * @param sim the simulation
+     */
     protected AbstrBasicHubBalancerFactory(DramaSimulation sim) {
 	super(sim);
 	removeParm("domainMember");

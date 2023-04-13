@@ -4,7 +4,6 @@ import org.bzdev.drama.common.*;
 
 /**
  * Base class for delay tables.
- *  
  */
 public abstract class DelayTable extends MsgForwardingInfo {
     DramaSimulation sim;
@@ -109,7 +108,6 @@ public abstract class DelayTable extends MsgForwardingInfo {
     /**
      * Get the time it takes to travel between two hubs, starting at the
      * current simulation time.
-     * <P>
      * @param src the starting hub
      * @param dest the ending hub
      * @param n the number of individuals traveling together

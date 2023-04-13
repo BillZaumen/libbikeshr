@@ -11,7 +11,6 @@ import org.bzdev.util.units.MKS;
  * <P>
  * The factory parameters this factory provides are the same as the parameters
  * provided by its subclass {@link HubFactory}:
- * <P>
  * <IFRAME SRC="{@docRoot}/factories-api/org/bzdev/bikeshare/HubFactory.html" style= "width:95%;height:500px;border:3px solid steelblue">
  * Please see
  *  <A HREF="{@docRoot}/factories-api/org/bzdev/bikeshare/HubFactory.html">
@@ -37,11 +36,19 @@ public abstract class AbstractHubFactory<Obj extends Hub>
     @PrimitiveParm("usrDomain")
     UsrDomain usrDomain = null;
 
+    /**
+     * Get the user domain.
+     * @return the user domain
+     */
     protected UsrDomain getUsrDomain() {return usrDomain;}
 
     @PrimitiveParm("sysDomain")
     SysDomain sysDomain = null;
 
+    /**
+     * Get the system domain.
+     * @return the system domain
+     */
     protected SysDomain getSysDomain() {return sysDomain;}
 
     private static final int DEFAULT_CAPACITY = 20;
@@ -142,6 +149,10 @@ public abstract class AbstractHubFactory<Obj extends Hub>
 
     AbstrHubFactoryPM<Obj> pm;
 
+    /**
+     * Constructor.
+     * @param sim the simulation
+     */
     protected AbstractHubFactory(DramaSimulation sim) {
 	super(sim);
 	this.sim = sim;

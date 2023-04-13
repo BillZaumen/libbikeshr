@@ -10,27 +10,26 @@
  *        simulation (i.e., factory  classes)
  *   <LI> The <A href="#instr">classes</A> used to instrument a simulation.
  * </UL>
- *
- * <A anchor="run"><H2>Classes used to run a simulation</H2></A>
+ * <A ID="run"></A><H2>Classes used to run a simulation</H2>
  * <P>
  * The classes used during the execution of a simulation, excluding
  * any instrumentation, are shown in the following figure:
  * <P style="text-align: center">
- * <img src="doc-files/simclasses.png" class="imgBackground">
+ * <img src="doc-files/simclasses.png" class="imgBackground" ALT="UML diagram">
  * <P>
  *
- * <A anchor="factories"><H2>Classes used to configure a simulation</H2></A>
+ * <A ID="factories"></A><H2>Classes used to configure a simulation</H2>
  * <P>
  * Factory classes are used to configure simulations by creating
  * simulation objects.  The factories that create actors are shown
  * in the following figure:
  * <P style="text-align: center">
- * <img src="doc-files/factories1.png" class="imgBackground">
+ * <img src="doc-files/factories1.png" class="imgBackground" ALT="UML diagram">
  * <P>
  * Similarly, the factories that configure domains and
  * delay tables are shown in the following figure:
  * <P style="text-align: center">
- * <img src="doc-files/factories2.png" class="imgBackground">
+ * <img src="doc-files/factories2.png" class="imgBackground" ALT="UML diagram">
  * <P>
  * As mentioned in the top-level overview, the factories should be
  * used in the following order or a similar order:
@@ -78,11 +77,11 @@
  *        has parameters whose values are hubs.
  * </UL>
  *
- * <A anchor="instr"><H2>Classes used to instrument a simulation</H2></A>
+ * <A ID="instr"></A><H2>Classes used to instrument a simulation</H2>
  * Classes used to instrument simulations can use instances of the
  * classes shown in the following figure:
  * <P style="text-align: center">
- * <img src="doc-files/instrument.png" class="imgBackground">
+ * <img src="doc-files/instrument.png" class="imgBackground" ALT="UML diagram">
  * <P>
  * For simulations written totally in Java, one could use the interfaces
  * directly although using the adapters may be more convenient in cases

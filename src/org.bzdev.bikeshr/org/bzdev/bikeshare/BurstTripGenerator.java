@@ -10,6 +10,11 @@ import java.lang.ref.WeakReference;
 import java.util.Arrays;
 import java.util.LinkedList;
 
+/**
+ * Trip generator for trips that occur in bursts.
+ * While the trips start in bursts, the destinations for
+ * each trip is independent of the others.
+ */
 public class BurstTripGenerator extends TripGenerator {
 
     static String errorMsg(String key, Object... args) {
@@ -125,7 +130,7 @@ public class BurstTripGenerator extends TripGenerator {
      * Initialization.
      * @param hub the hub from which trips originate
      * @param time the time at which trips are generated
-     * @param nbikes is the number of
+     * @param nbikes is the number of bicycles in a burst
      * @param otherHubs the destination hubs
      * @param weights the probabilities that the destination is a
      *        particular hub
@@ -348,6 +353,12 @@ public class BurstTripGenerator extends TripGenerator {
      * <P>
      * Defined for class BurstTripGenerator:
      * <UL>
+     *   <LI><B>trips pending</B>. The number of trips scheduled but not
+     *       yet started.
+     *   <LI><B>trips completed</B>. The number of trips that were completed.
+     *   <LI><B>trips in progress</B>. The number of trips in progress.
+     *   <LI><B>trips failed</B>. The number of trips that could not be
+     *       completed.
      * </UL>
      */
     public void printState(String iPrefix, String prefix,
@@ -362,6 +373,5 @@ public class BurstTripGenerator extends TripGenerator {
 	out.println(prefix + "trips completed: " + tripsCompleted);
 	out.println(prefix + "trips in progress:" + tripsInProgress);
 	out.println(prefix + "trips failed: " + tripsFailed);
-
     }
 }

@@ -69,6 +69,11 @@ public abstract class DelayTableFactory<Obj extends DelayTable>
     public DelayTableFactory() {
 	this(null);
     }
+
+    /**
+     * Constructor.
+     * @param sim the simulation
+     */
     protected DelayTableFactory(DramaSimulation sim) {
 	super(sim);
 	pm = new DelayTblFactoryPM<Obj>(this);

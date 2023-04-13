@@ -43,7 +43,7 @@ public abstract class TripGenerator extends Actor {
 
     DramaSimulation sim;
 
-    /*
+    /**
      * Constructor.
      * @param sim the simulation
      * @param name the name of this object
@@ -397,6 +397,7 @@ public abstract class TripGenerator extends Actor {
      * after a pause.
      * @param tripID the ID for this trip
      * @param hub the hub at which this event occurred
+     * @param d the hub domain at which this event occurred
      */
     protected void fireTripPauseEnd(long tripID, Hub hub, HubDomain d)
     {

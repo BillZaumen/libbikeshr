@@ -19,7 +19,6 @@ import org.bzdev.util.units.MKS;
  * should be set to other values only if other communication
  * domains are defined (e.g., if this simulation library is used
  * in conjunction with other libraries).
- * <P>
  */
 public class BikeShare {
 
@@ -108,6 +107,7 @@ public class BikeShare {
      * </UL>
      * Normally level1 &lt; level2 &lt; level3 &lt; level4 where the
      * comparison uses the enumerations' ordinal values.
+     * @param <T> the enumeration type used to name trace levels
      * @param level1 the first trace level
      * @param level2 the second trace level
      * @param level3 the third trace level

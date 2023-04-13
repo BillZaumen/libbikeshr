@@ -2,6 +2,7 @@
 <HTML lang="en">
 <HEAD>
     <TITLE>Description of org.bzdev.bikeshare</TITLE>
+    <LINK rel="stylesheet" type="text/css" href="../stylesheet.css">
 </HEAD>
 <BODY>
 <H1>Description</H1>
@@ -26,7 +27,7 @@ libbzdev.jar is automatically included.
 </UL>
 A typical scrunner script (EMCAScript is used as an example) will typically
 start with the following:
-<blockquote><code><pre>
+<blockquote><pre><code>
 scripting.importClasses("org.bzdev.bikeshare",
 			["HubDataAdapter", "TripDataAdapter"]);
 
@@ -54,7 +55,41 @@ sim.createFactories("org.bzdev.bikeshare", {
     schedtf: "SchedDelayTableFactory",
     btgf: "BasicTripGenFactory"
 });
-</pre></code></blockquote>
+</code></pre></blockquote>
+The corresponding ESP script is
+<blockquote><pre><code>
+import (org.bzdev.bikeshare,
+	[HubDataAdapter, TripDataAdapter]);
+
+import (org.bzdev.drama.DramaSimulation);
+import (org.bzdev.util.units.MKS);
+
+// Import whatever random number generators are desired.
+import (org.bzdev.math.rv.GaussianRV);
+
+// 1000.0 is the number of simulation ticks per second and can
+// be changed as desired.
+var sim = new DramaSimulation(scripting, 1000.0);
+
+var simff = sim.createFactory("org.bzdev.devqsim.SimFunctionTwoFactory");
+
+sim.createFactories("org.bzdev.bikeshare", {
+    edf: "ExtDomainFactory",
+    udf: "UsrDomainFactory",
+    sdf: "SysDomainFactory",
+    hbf: "BasicHubBalancerFactory",
+    hf: "HubFactory",
+    shf: "StorageHubFactory",
+    hwf: "HubWorkerFactory",
+    stdtf: "StdDelayTableFactory",
+    schedtf: "SchedDelayTableFactory",
+    btgf: "BasicTripGenFactory"
+});
+###
+</code></pre></blockquote>
+The line containing <CODE>###</CODE> is needed if any following statements
+use one of the factories defined by calling the <CODE>createFactories</CODE>
+method.  It is not needed if those statements appear in a separate file.
 The factories should be used in the order listed above, or a similar
 order, due to the following dependencies:
 <UL>

@@ -55,6 +55,8 @@ public class HubCondition extends Condition {
     /**
      * Determine if the last hub that was changed has bicycles in its
      * overflow area.
+     * @return true if the last hub that was changed has bicycles in its
+     *         overflow area; false otherwise
      */
     public boolean getInOverflowSet() {return inOverflowSet;}
 
@@ -201,6 +203,26 @@ public class HubCondition extends Condition {
      * <P>
      * For class {@link HubCondition}:
      * <UL>
+     *   <LI><B>last changed hub</B>. The last hub that was changed.
+     *   <LI><B>inOverSet</B>. True if the last hub that was changed
+     *       has more bicycles stored at the hub's preferred location than
+     *       the upper-trigger value.
+     *   <LI><B>inOverflowSet</B>. True if the last hub that was changed
+     *       has bicycles in its overflow area.
+     *   <LI><B>inUnderSet</B>. True if the last hub that was changed
+     *       has fewer bicycles at the hub's preferred location than the
+     *       lower trigger value.
+     *   <LI><B>overSet</B>. Get the set of hubs for which the number of
+     *       bicycles at a hub's preferred location  exceed the hub's
+     *       upper trigger value.
+     *   <LI><B>overflowSet</B>. Get the set of hubs for which the number
+     *       of bicycles in the overflow area is nonzero.
+     *   <LI><B>underSet</B>. Get the set of hubs for which the number
+     *       of bicycles at a hub's preferred location is less than the
+     *       lower trigger value.
+     *   <LI><B>inRangeSet</B>. Get the set of hubs for which the number
+     *       of bicycles at a hub's preferred location is between or at
+     *       the lower and upper triggers.
      * </UL>
      * @param iPrefix the prefix to use for an initial line when printName is
      *        true with null treated as an empty string

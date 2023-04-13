@@ -138,7 +138,7 @@ public class StdDelayTable extends DelayTable {
 
     Map<Hub,Map<Hub,Entry>> map = new HashMap<>();
 
-    /*
+    /**
      * Add an entry describing a trip between two hubs.
      * One will provide a distance between the hubs the number of
      * stops, the probability of stopping at one of the stops, and a

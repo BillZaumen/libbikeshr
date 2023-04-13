@@ -73,6 +73,11 @@ public abstract class HubDomainFactory<Obj extends HubDomain>
     public HubDomainFactory() {
 	this(null);
     }
+
+    /**
+     * Constructor.
+     * @param sim the simulation.
+     */
     protected HubDomainFactory(DramaSimulation sim) {
 	super(sim);
 	this.sim = sim;

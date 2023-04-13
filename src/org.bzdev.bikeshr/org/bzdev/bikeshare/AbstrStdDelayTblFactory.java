@@ -16,7 +16,6 @@ import java.util.LinkedHashSet;
  * <P>
  * The factory parameters this factory provides are the same as the parameters
  * provided by its subclass {@link StdDelayTableFactory}:
- * <P>
  * <IFRAME SRC="{@docRoot}/factories-api/org/bzdev/bikeshare/StdDelayTableFactory.html" style= "width:95%;height:500px;border:3px solid steelblue">
  * Please see
  *  <A HREF="{@docRoot}/factories-api/org/bzdev/bikeshare/StdDelayTableFactory.html">
@@ -112,6 +111,10 @@ public abstract class AbstrStdDelayTblFactory<Obj extends StdDelayTable>
 
     AbstrStdDelayTblFactoryPM<Obj> pm;
 
+    /**
+     * Constructor.
+     * @param sim the simulation
+     */
     protected AbstrStdDelayTblFactory(DramaSimulation sim) {
 	super(sim);
 	this.sim = sim;

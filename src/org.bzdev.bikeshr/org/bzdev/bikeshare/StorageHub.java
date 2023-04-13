@@ -148,7 +148,6 @@ public class StorageHub extends Hub {
      * The initial allocations are desired values.  Enough workers must
      * be available for these desired values to be met or the actual
      * number allocated will be less.
-     * <P>
      * @param nworkersNP the number of workers that will loop between hubs,
      *        ignoring the overflow areas but handling the preferred areas,
      *        corresponding to the worker mode LOOP_NO_PICKUP
@@ -162,13 +161,13 @@ public class StorageHub extends Hub {
      *        LOOP_TO_FIX_OVERFLOWS
      * @param intervalNP the desired time interval in units of seconds
      *        from the start of one loop to the start of the next
-     *        for the nworkersNP case
+     *        for the nworkersNP case (worker mode LOOP_NO_PICKUP)
      * @param intervalWP the desired time interval in units of
      *        seconds from the start of one loop to the start of the next
-     *        for the nworkersWP case
+     *        for the nworkersWP case (worker mode LOOP_WITH_PICKUP)
      * @param intervalFO the desired time interval in units of
      *        seconds from the start of one loop to the start of the next
-     *        for the nworkersFO case
+     *        for the nworkersFO case (worker mode LOOP_TO_FIX_OVERFLOWS)
      */
     public void setInitialNumberOfWorkers(int nworkersNP, int nworkersWP,
 					  int nworkersFO,
@@ -192,6 +191,8 @@ public class StorageHub extends Hub {
      * to arguments of the method
      * {@link #setInitialNumberOfWorkers(int,int,int,double,double,double)}.
      * @param mode the worker mode for the allocation
+     * @return the initial number of workers that were requested for
+     *         the given mode
      */
     public int getInitialNumberOfWorkers(HubWorker.Mode mode) {
 	switch(mode) {
@@ -206,6 +207,12 @@ public class StorageHub extends Hub {
 	}
     }
 
+    /**
+     * Get the desired time interval interval from the start of one loop
+     * to the start of the next for hub workers with various modes.
+     * @param mode the mode
+     * @return the interval in seconds
+     */
     public double getInterval(HubWorker.Mode mode) {
 	switch(mode) {
 	case LOOP:
@@ -249,8 +256,12 @@ public class StorageHub extends Hub {
      * worker mode. The set is ordered by the order of insertion
      * and indicates the order in which hubs will be visited for
      * each worker mode.
+     * <P>
+     * Storage hubs cannot be added to the hub table.
      * @param mode the worker mode; null for all modes
      * @param hub the hub to add
+     * @return true if the hub was added sucessfully and was not
+     *         previously in the table; false otherwise.
      */
     public boolean addHub(HubWorker.Mode mode, Hub hub) {
 	if (hub instanceof StorageHub) return false;
@@ -271,6 +282,8 @@ public class StorageHub extends Hub {
      * each worker mode.
      * @param mode the worker mode
      * @param hub the hub to add
+     * @return true if the hub was removed; false if it could not
+     *         be removed or was already removed
      */
     public boolean removeHub(HubWorker.Mode mode, Hub hub) {
 	if (hub instanceof StorageHub) return false;

@@ -104,7 +104,13 @@ public class Hub extends Actor {
 
     private int initialBikeCount;
 
+    /**
+     * The bicycle count.
+     */
     protected int bikeCount;
+    /**
+     * The overflow count.
+     */
     protected int overflow;
     private int capacity;
     private int lowerTrigger;

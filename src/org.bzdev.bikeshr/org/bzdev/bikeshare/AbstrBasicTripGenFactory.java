@@ -17,7 +17,6 @@ import java.util.LinkedHashMap;
  * <P>
  * The factory parameters this factory provides are the same as the parameters
  * provided by its subclass {@link BasicTripGenFactory}:
- * <P>
  * <IFRAME SRC="{@docRoot}/factories-api/org/bzdev/bikeshare/BasicTripGenFactory.html" style= "width:95%;height:500px;border:3px solid steelblue">
  * Please see
  *  <A HREF="{@docRoot}/factories-api/org/bzdev/bikeshare/BasicTripGenFactory.html">
@@ -80,6 +79,10 @@ public abstract class AbstrBasicTripGenFactory<Obj extends BasicTripGenerator>
 
     BasicTripGenFactoryPM<Obj> pm;
 
+    /**
+     * Constructor.
+     * @param sim the simulation
+     */
     protected AbstrBasicTripGenFactory(DramaSimulation sim) {
 	super(sim);
 	pm = new BasicTripGenFactoryPM<Obj>(this);

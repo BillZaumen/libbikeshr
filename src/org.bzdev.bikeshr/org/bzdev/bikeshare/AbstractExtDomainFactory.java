@@ -7,7 +7,6 @@ import org.bzdev.obnaming.annotations.FactoryParmManager;
  * <P>
  * The factory parameters this factory provides are the same as the parameters
  * provided by its subclass {@link ExtDomainFactory}:
- * <P>
  * <IFRAME SRC="{@docRoot}/factories-api/org/bzdev/bikeshare/ExtDomainFactory.html" style= "width:95%;height:500px;border:3px solid steelblue">
  * Please see
  *  <A HREF="{@docRoot}/factories-api/org/bzdev/bikeshare/ExtDomainFactory.html">
@@ -25,6 +24,10 @@ import org.bzdev.obnaming.annotations.FactoryParmManager;
 public abstract class AbstractExtDomainFactory<Obj extends ExtDomain>
     extends HubDomainFactory<Obj>
 {
+    /**
+     * Constructor.
+     * @param sim the simulation
+     */
     protected AbstractExtDomainFactory(DramaSimulation sim) {
 	super(sim);
 	removeParm("parent");
